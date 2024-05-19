@@ -22,3 +22,4 @@ altair
 streamlit_option_menu
 streamlit-authenticator==0.1.3
 st-pages
+streamlit_extras
