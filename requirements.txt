@@ -20,3 +20,4 @@ bokeh
 ggplot
 altair
 streamlit_option_menu
+streamlit-authenticator
