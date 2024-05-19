@@ -6,6 +6,7 @@ from streamlit_extras.dataframe_explorer import dataframe_explorer
 import plotly.express as px
 import warnings
 import pandas as pd
+import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_pca_correlation_graph
 import os
 import matplotlib.pyplot as plt
