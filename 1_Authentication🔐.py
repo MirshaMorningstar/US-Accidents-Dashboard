@@ -51,7 +51,7 @@ if authentication_status:
     placeholder1.empty()
     placeholder2.empty()
     hide_pages(["streamlit_app","user_auth","re_auth","EDA_window"])
-    st.switch_page(r"pages\2_Change_Theme🎨🖼️🔄.py")
+    st.switch_page(r"pages/2_Change_Theme🎨🖼️🔄.py")
     
     
 
