@@ -9,7 +9,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_pca_correlation_graph
 import os
-import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 import numpy as np
 import math
