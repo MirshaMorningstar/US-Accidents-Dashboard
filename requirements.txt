@@ -13,7 +13,6 @@ xgboost
 lightgbm
 pytest
 tqdm
-ydata-profiling
 streamlit-pandas-profiling
 Jinja2
 plost
