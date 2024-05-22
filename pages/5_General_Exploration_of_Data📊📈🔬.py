@@ -4,7 +4,7 @@ import streamlit as st
 import streamlit_extras as stex
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.dataframe_explorer import dataframe_explorer
-from pandas_profiling import ProfileReport
+from ydata_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
 
 st.set_page_config(initial_sidebar_state="collapsed",page_title= " The Exploratory Data Analysis Window",
