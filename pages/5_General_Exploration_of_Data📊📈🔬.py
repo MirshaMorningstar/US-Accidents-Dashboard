@@ -5,7 +5,7 @@ import streamlit_extras as stex
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.dataframe_explorer import dataframe_explorer
 from ydata_profiling import ProfileReport
-from streamlit_pandas_profiling import st_profile_report
+#from streamlit_pandas_profiling import st_profile_report
 
 st.set_page_config(initial_sidebar_state="collapsed",page_title= " The Exploratory Data Analysis Window",
         menu_items={
@@ -51,11 +51,13 @@ if uploaded_file is not None:
         return csv
     df = load_csv()
     pr = ProfileReport(df, title="Pandas Profiling Report", explorative=True)
+    pr.to_file(output_file="output.html")
     st.header('**Input DataFrame**')
     st.write(df)
     st.write('---')
     st.header('**Dataset Profiling Report**')
-    st_profile_report(pr)
+    st.html("output.html")
+    #st_profile_report(pr)
 else:
     st.info('Awaiting for CSV file to be uploaded.')
     add_vertical_space(2)
@@ -68,8 +70,10 @@ else:
         
         df = load_data()
         pr = ProfileReport(df, title="Pandas Profiling Report", explorative=True)
+        pr.to_file(output_file="output.html")
         st.header('**Input DataFrame**')
         st.write(df)
         st.write('---')
         st.header('**Dataset Profiling Report**')
-        st_profile_report(pr)
+        st.html("output.html")
+        #st_profile_report(pr)
