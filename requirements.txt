@@ -1,5 +1,6 @@
 ydata-profiling
 streamlit
+streamlit_folium
 pandas
 base58
 numpy
