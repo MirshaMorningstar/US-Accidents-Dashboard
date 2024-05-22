@@ -64,7 +64,7 @@ if fl is not None:
     st.write(filename)
     df = pd.read_csv(filename, encoding = "ISO-8859-1")
 else:
-    df = pd.read_csv(r"C:\Users\DELL\Desktop\STREAMLIT\US.csv", encoding = "ISO-8859-1")
+    df = pd.read_csv(r"US.csv", encoding = "ISO-8859-1")
     df = df.sample(n=10000,random_state = 42)
 
 add_vertical_space(3)
