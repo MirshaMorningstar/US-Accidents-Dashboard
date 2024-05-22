@@ -122,7 +122,7 @@ st.sidebar.markdown("---")
 # =======
 #   App
 # =======
-img = Image.open(r"C:\Users\DELL\Desktop\STREAMLIT\sample_nature.jpg")
+img = Image.open(r"sample_nature.jpg")
 # provide options to either select an image form the gallery, upload one, or fetch from URL
 upload_tab, url_tab = st.tabs(["Upload", "Image URL"])
 
