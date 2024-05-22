@@ -1,4 +1,4 @@
-ydata-profiling
+pandas-profiling
 streamlit
 streamlit_folium
 pandas
