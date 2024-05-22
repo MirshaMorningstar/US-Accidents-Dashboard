@@ -1,6 +1,9 @@
+visions
+ydata-profiling
+streamlit-pandas-profiling
 streamlit
 streamlit_folium
-pandas==1.3.4
+pandas
 base58
 numpy
 phik
@@ -14,8 +17,6 @@ xgboost
 lightgbm
 pytest
 tqdm
-ydata-profiling==4.1.0
-streamlit-pandas-profiling
 Jinja2
 plost
 bokeh
