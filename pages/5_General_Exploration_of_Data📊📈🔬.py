@@ -4,7 +4,7 @@ import streamlit as st
 import streamlit_extras as stex
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.dataframe_explorer import dataframe_explorer
-!pip install ydata-profiling
+import pandas_profiling
 from ydata-profile import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
 
@@ -51,7 +51,7 @@ if uploaded_file is not None:
         csv = pd.read_csv(uploaded_file)
         return csv
     df = load_csv()
-    pr = ProfileReport(df, explorative=True)
+    pr = df.profile_report()
     st.header('**Input DataFrame**')
     st.write(df)
     st.write('---')
@@ -68,7 +68,7 @@ else:
             return a
         
         df = load_data()
-        pr = ProfileReport(df, explorative=True)
+        pr = df.profile_report()
         st.header('**Input DataFrame**')
         st.write(df)
         st.write('---')
