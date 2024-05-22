@@ -42,7 +42,7 @@ warnings.filterwarnings('ignore')
 
 def modify(primary="#bd4bff",back="#efe6e6",secondary="#f0f2f5",font="serif",text="black",dark = False):
     # Path to your config.toml file
-    config_path = r"C:\Users\DELL\Desktop\STREAMLIT\.streamlit\config.toml"
+    config_path = r".streamlit/config.toml"
 
     # Read the contents of config.toml
     with open(config_path, "r") as f:
