@@ -1,4 +1,3 @@
-pandas-profiling
 streamlit
 streamlit_folium
 pandas
@@ -15,6 +14,7 @@ xgboost
 lightgbm
 pytest
 tqdm
+ydata-profiling
 streamlit-pandas-profiling
 Jinja2
 plost
