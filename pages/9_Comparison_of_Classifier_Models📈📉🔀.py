@@ -6,7 +6,6 @@ import streamlit as st
 import streamlit_extras as stex
 from streamlit_extras.add_vertical_space import add_vertical_space
 import pandas as pd
-from lazypredict.Supervised import LazyRegressor
 from lazypredict.Supervised import LazyClassifier
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
