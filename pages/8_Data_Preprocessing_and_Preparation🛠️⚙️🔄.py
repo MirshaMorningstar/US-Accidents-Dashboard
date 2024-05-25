@@ -21,7 +21,6 @@ from sklearn.decomposition import PCA
 from sklearn.feature_selection import SelectKBest, chi2, f_classif
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
-
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from sklearn.ensemble import RandomForestClassifier
@@ -29,66 +28,69 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 import plotly.figure_factory as ff
-
 from scipy import stats
-from sklearn.preprocessing import StandardScaler,MinMaxScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 
-
 warnings.filterwarnings('ignore')
 
+st.set_page_config(
+    initial_sidebar_state="collapsed",
+    page_title="Data Pre-Processing and Preparation for Exploration",
+    menu_items={
+        'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
+        'Report a bug': "mailto:a.k.mirsha9@gmail.com",
+        'About': "### This is an extremely cool web application built as a part of my Data Science Mini Project on the 'US Accidents Dataset'\n"
+    },
+    page_icon="analysis.png",
+    layout="wide"
+)
 
-
-st.set_page_config(initial_sidebar_state="collapsed",page_title= " Data Pre - Processing and Preparation for Exploration ",
-        menu_items={
-         'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
-         'Report a bug': "mailto:a.k.mirsha9@gmail.com",
-         'About': "### This is an extremely cool web application built as a part of my Data Science Mini Project on the ' US Accidents Dataset '\n"
-     },page_icon="analysis.png",layout="wide")
-
-
-st.markdown('''# **The Data Preprocessing and Preparation Window**''')
+st.markdown('# **The Data Preprocessing and Preparation Window**')
 add_vertical_space(2)
-st.markdown('''##### :smile: This Window is specifically generated to carry out to apply Data Preparation and Preprocessing Techniques such as Normalisation, Binning and Sampling for Further Exploration. :balloon: ''' )
+st.markdown('##### :smile: This Window is specifically generated to carry out Data Preparation and Preprocessing Techniques such as Normalisation, Binning, and Sampling for Further Exploration. :balloon:')
 
 add_vertical_space(3)
 
-c1,c2,c3 = st.columns(3)
+c1, c2, c3 = st.columns(3)
 with c2:
-    fl = st.file_uploader(":file_folder: Upload your file",type=(["csv","txt","xlsx","xls"]))
+    fl = st.file_uploader(":file_folder: Upload your file", type=(["csv", "txt", "xlsx", "xls"]))
 if fl is not None:
     filename = fl.name
     st.write(filename)
-    df = pd.read_csv(filename, encoding = "ISO-8859-1")
+    df = pd.read_csv(filename, encoding="ISO-8859-1")
 else:
-    df = pd.read_csv("US_Accidents_1000.csv", encoding = "ISO-8859-1")
+    df = pd.read_csv("US_Accidents_1000.csv", encoding="ISO-8859-1")
 
 add_vertical_space(3)
-
 
 st.markdown('## Data Normalisation Process')
 add_vertical_space(2)
 st.markdown('''**Feature Scaling is an essential step in the data analysis and preparation of data for modeling. Wherein, we make the data scale-free for easy analysis.**
 
-**Normalization is one of the feature scaling techniques. We particularly apply normalization when the data is skewed on the either axis i.e. when the data does not follow the gaussian distribution.**''')
+**Normalization is one of the feature scaling techniques. We particularly apply normalization when the data is skewed on either axis i.e. when the data does not follow the Gaussian distribution.**''')
 
 add_vertical_space(5)
 
-
-numerical_columns = df.select_dtypes(include=['int','float']).columns
+numerical_columns = df.select_dtypes(include=['int', 'float']).columns
 print(numerical_columns)
 
 data = df.dropna()
 
-c1,c2 = st.columns(2)
+# Adding a color palette selection box
+color_palettes = ['viridis', 'plasma', 'inferno', 'magma', 'cividis', 'Blues', 'Greens', 'Reds', 'Purples', 'Oranges',
+                  'Greys', 'YlGnBu', 'PuBuGn', 'YlOrRd', 'PuBu', 'GnBu', 'BuPu', 'OrRd', 'BuGn', 'RdPu']
+color_palette = st.selectbox("Select Color Palette for Plots", color_palettes, index=0)
+
+c1, c2 = st.columns(2)
 
 with c1:
-    st.markdown('##### Min- Max Normalisation')
+    st.markdown('##### Min-Max Normalisation')
     st.write("**The Normalised Data strictly lies between 0 to 1**")
     add_vertical_space(2)
 
-    attribute = st.selectbox("Select the Attribute to visualise the Min- Max Normalisation for", list(numerical_columns), index = 6)
+    attribute = st.selectbox("Select the Attribute to visualise the Min-Max Normalisation for", list(numerical_columns), index=6)
     
     # Normalize data
     scaler = MinMaxScaler()
@@ -97,18 +99,12 @@ with c1:
 
     st.markdown("##### Visual inspection")
     add_vertical_space(1)
-    
-
-
-    # Adding legend
-    plt.legend()
 
     # Displaying the plots in Streamlit
-    fig = px.histogram(data[attribute],title='Original Data')
-    wig = px.histogram(data_normalized,title='Normalised Data')
-    #st.pyplot(view2.figure)
-    st.plotly_chart(fig,use_container_width=True)
-    st.plotly_chart(wig,use_container_width=True)
+    fig = px.histogram(data[attribute], title='Original Data', color_discrete_sequence=px.colors.sequential.__dict__[color_palette])
+    wig = px.histogram(data_normalized, title='Normalised Data', color_discrete_sequence=px.colors.sequential.__dict__[color_palette])
+    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(wig, use_container_width=True)
 
     add_vertical_space(3)
 
@@ -126,17 +122,12 @@ with c1:
     st.write("Original Data Scores:", scores_original.mean())
     st.write("Normalized Data Scores:", scores_normalized.mean())
 
-
-
-  
-
-
 with c2:
     st.markdown('##### Standard Normalisation')
     st.write("**The Normalised Data strictly has the Mean of 0 and Standard Deviation of approximately 1**")
     add_vertical_space(2)
 
-    attribute = st.selectbox("Select the Attribute to visualise the Standardisation for", list(numerical_columns), index = 6)
+    attribute = st.selectbox("Select the Attribute to visualise the Standardisation for", list(numerical_columns), index=6)
     
     # Normalize data
     scaler = StandardScaler()
@@ -146,19 +137,11 @@ with c2:
     st.markdown("##### Visual inspection")
     add_vertical_space(1)
     
-    # Plotting the KDE plots
-    #view1 = sns.kdeplot(data[attribute], label='Original')
-    #view2 = sns.kdeplot(data_normalized.flatten(), label='Normalized')
-
-    # Adding legend
-    plt.legend()
-
     # Displaying the plots in Streamlit
-    fig = px.histogram(data[attribute],title='Original Data')
-    wig = px.histogram(data_normalized,title='Normalised Data')
-    #st.pyplot(view2.figure)
-    st.plotly_chart(fig,use_container_width=True)
-    st.plotly_chart(wig,use_container_width=True)
+    fig = px.histogram(data[attribute], title='Original Data', color_discrete_sequence=px.colors.sequential.__dict__[color_palette])
+    wig = px.histogram(data_normalized, title='Normalised Data', color_discrete_sequence=px.colors.sequential.__dict__[color_palette])
+    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(wig, use_container_width=True)
 
     add_vertical_space(3)
 
@@ -175,7 +158,6 @@ with c2:
 
     st.write("Original Data Scores:", scores_original.mean())
     st.write("Normalized Data Scores:", scores_normalized.mean())
-  
 
 add_vertical_space(5)
 st.markdown('### Statistical Method Normalisation Verification')
@@ -183,8 +165,7 @@ w_statistic, p_value = stats.shapiro(data_normalized)
 st.write("Normal Data - W statistic:", w_statistic, "P-value:", p_value)
 # Test for non-normal data
 w_statistic_non_normal, p_value_non_normal = stats.shapiro(data['Temperature(F)'])
-st.write("Non-Normal Data - W statistic:", w_statistic_non_normal, "P-value:",
-p_value_non_normal)
+st.write("Non-Normal Data - W statistic:", w_statistic_non_normal, "P-value:", p_value_non_normal)
 
 add_vertical_space(3)
 
@@ -192,14 +173,10 @@ st.write('''**Interpreting the Results**
          
 **● W statistic: Closer to 1 indicates data is more likely to be normal.**
          
-**● P-value: A p-value greater than the chosen alpha level (commonly set at 0.05)**
-         
-**suggests that the null hypothesis of normality cannot be rejected. A small p-value**
-**(typically ≤ 0.05) indicates strong evidence against the null hypothesis, so you**
-**reject the null hypothesis of normality**''')
+**● P-value: A p-value greater than the chosen alpha level (commonly set at 0.05) suggests that the null hypothesis of normality cannot be rejected. A small p-value (typically ≤ 0.05) indicates strong evidence against the null hypothesis, so you reject the null hypothesis of normality**''')
 
 add_vertical_space(5)
-st.markdown("### Quantile- Quantile Plot")
+st.markdown("### Quantile-Quantile Plot")
 
 add_vertical_space(3)
 
@@ -218,7 +195,6 @@ axes[1].set_title('Q-Q Plot for Normalized Data')
 st.pyplot(fig)
 add_vertical_space(5)
 
-
 st.markdown("### Interactive Binning")
 add_vertical_space(3)
 
@@ -229,20 +205,18 @@ def perform_binning(data, column_name, labels, value_ranges):
     return data
 
 def plot_binned_column(data, column_name, title):
-
-    bar =  px.bar(x=column_name, data_frame=data)
+    bar = px.bar(x=column_name, data_frame=data, color_discrete_sequence=px.colors.sequential.__dict__[color_palette])
     st.plotly_chart(bar)
-
 
 st.subheader('Binning Options')
 add_vertical_space(2)
-bin_col_name = st.selectbox("Select the Numerical Attribute to visualise the Binning for", list(numerical_columns), index = 6)
+bin_col_name = st.selectbox("Select the Numerical Attribute to visualise the Binning for", list(numerical_columns), index=6)
 add_vertical_space(1)
 if bin_col_name in df.columns:
-    labels_input = st.text_input("Enter bin labels (comma-separated):",value='very cold,cold,moderate,warm,hot')
+    labels_input = st.text_input("Enter bin labels (comma-separated):", value='very cold,cold,moderate,warm,hot')
     add_vertical_space(1)
     labels = [label.strip() for label in labels_input.split(',')]
-    value_ranges_input = st.text_input("Enter value ranges for bins (comma-separated):",value='-100,32,50,70,90,200')
+    value_ranges_input = st.text_input("Enter value ranges for bins (comma-separated):", value='-100,32,50,70,90,200')
     value_ranges = [float(val.strip()) for val in value_ranges_input.split(',')]
     add_vertical_space(2)
     if st.button('Perform Binning'):
