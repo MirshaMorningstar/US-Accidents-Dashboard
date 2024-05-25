@@ -2,12 +2,8 @@ visions
 streamlit
 streamlit_folium
 pandas
-base58
 numpy
 phik
-pillow
-plotly
-scikit-learn
 lazypredict
 seaborn
 matplotlib
@@ -26,3 +22,8 @@ st-pages
 streamlit_extras
 mlxtend
 folium
+base58==2.0.1
+numpy==1.19.2
+pillow==8.0.1
+plotly==4.14.1
+scikit-learn==0.23.2
