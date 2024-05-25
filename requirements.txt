@@ -1,5 +1,4 @@
 visions
-ydata-profiling
 streamlit
 streamlit_folium
 pandas
