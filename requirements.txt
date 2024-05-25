@@ -1,3 +1,7 @@
+base58==2.0.1
+pillow==8.0.1
+plotly==4.14.1
+scikit-learn==0.23.2
 visions
 streamlit
 streamlit_folium
@@ -22,8 +26,3 @@ st-pages
 streamlit_extras
 mlxtend
 folium
-base58==2.0.1
-numpy==1.19.2
-pillow==8.0.1
-plotly==4.14.1
-scikit-learn==0.23.2
