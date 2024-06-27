@@ -29,8 +29,8 @@ placeholder2.markdown(
     """Hello There !!!  A Warm Welcome to our Application Dashboard. This highly interactive and sophisticated dashboard provides insights into intricate patterns, relationships and brings forth the overall knowledge of the " US accidents data ". This Web- Application Dashboard is specially built using Streamlit and Plotly. Feel free to Access it by logging in below."""
 ) 
 
-st.markdown("### The Username is **Mirsha Morningstar**")
-st.markdown("### The Password is **AKM69**")
+st.markdown("### The Username is ' **Mirsha Morningstar** '")
+st.markdown("### The Password is ' **AKM69** '")
 st.markdown("Kindly Login the Application using the above credentials...")
 authenticator = stauth.Authenticate(names,usernames,hashed_passwords,"US Accidents Dashboard","abcdef",cookie_expiry_days=0)
 
