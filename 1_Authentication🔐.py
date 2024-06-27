@@ -40,8 +40,8 @@ authenticator = stauth.Authenticate(
 # Modify the login box with placeholder text
 def custom_login(authenticator):
     form = st.form(key='login_form')
-    username = form.text_input('Username', placeholder='Enter your username here')
-    password = form.text_input('Password', type='password', placeholder='Enter your password here')
+    username = form.text_input('Username', placeholder='Sample Name')
+    password = form.text_input('Password', type='password', placeholder='Sample Password')
     login_button = form.form_submit_button('Login')
     if login_button:
         return authenticator._check_credentials(username, password)
