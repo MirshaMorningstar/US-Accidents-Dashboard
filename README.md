@@ -1,4 +1,4 @@
-# US Accidents Dashboard Project
+# The US Accidents Analysis and Case Study Dashboard
 
 Welcome to the US Accidents Dashboard Project! This unique and comprehensive dashboard provides detailed insights into traffic accidents across the United States. Below is a detailed overview of the project, including its purpose, features, and requirements.
 
