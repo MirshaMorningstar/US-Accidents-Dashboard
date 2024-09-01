@@ -9,7 +9,7 @@ from streamlit.components.v1 import html
 from st_pages import hide_pages
 
 
-st.set_page_config(initial_sidebar_state="collapsed")
+st.set_page_config(initial_sidebar_state="expanded")
 
 # User authentication
 names = ["Mirsha Morningstar", "Rameez Akther", "Chandru", "Mekesh"]
