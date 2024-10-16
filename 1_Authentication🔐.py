@@ -6,7 +6,7 @@ import streamlit_authenticator as stauth
 
 from streamlit.components.v1 import html
 
-from st_pages import hide_pages
+
 
 
 st.set_page_config(initial_sidebar_state="expanded")
@@ -20,7 +20,7 @@ file_path = Path(__file__).parent/"hashed_pw.pkl"
 with file_path.open("rb") as file:
     hashed_passwords = pickle.load(file)
 
-hide_pages(["streamlit_app","user_auth","re_auth"])
+
 
 placeholder1 = st.empty()
 placeholder2 = st.empty()
@@ -39,7 +39,6 @@ name,authentication_status,username = authenticator.login("Login your credential
 
 
 if authentication_status == False :
-    hide_pages(["streamlit_app","user_auth","re_auth","EDA_window"])
     st.error("The provided Username or Password is incorrect !!!")
 
 if authentication_status == None:
@@ -52,7 +51,7 @@ if authentication_status:
     print("Success")
     placeholder1.empty()
     placeholder2.empty()
-    hide_pages(["streamlit_app","user_auth","re_auth","EDA_window"])
+   
     st.switch_page(r"pages/2_Change_Theme🎨🖼️🔄.py")
     
     
