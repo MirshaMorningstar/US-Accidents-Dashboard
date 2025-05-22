@@ -100,8 +100,8 @@ with c1:
 # Displaying the plots in Streamlit
     fig = px.histogram(data[attribute], title='Original Data', color_discrete_sequence=px.colors.sequential.Plotly3)
     wig = px.histogram(data_normalized.flatten(), title='Normalised Data', color_discrete_sequence=px.colors.sequential.Plotly3)
-    st.plotly_chart(fig, use_container_width=True)
-    st.plotly_chart(wig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, key = "fig")
+    st.plotly_chart(wig, use_container_width=True, key = "wig")
 
     add_vertical_space(3)
 
@@ -137,8 +137,8 @@ with c2:
     # Displaying the plots in Streamlit
     fig = px.histogram(data[attribute], title='Original Data', color_discrete_sequence=px.colors.sequential.Plotly3)
     wig = px.histogram(data_normalized.flatten(), title='Normalised Data', color_discrete_sequence=px.colors.sequential.Plotly3)
-    st.plotly_chart(fig, use_container_width=True)
-    st.plotly_chart(wig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, key = "fig2")
+    st.plotly_chart(wig, use_container_width=True, key = "wig2")
 
     add_vertical_space(3)
 
@@ -204,7 +204,7 @@ def perform_binning(data, column_name, labels, value_ranges):
 def plot_binned_column(data, column_name, title):
     bar = px.bar(x=data[column_name].value_counts().index, y=data[column_name].value_counts().values,
                  color_discrete_sequence=px.colors.sequential.Plotly3)
-    st.plotly_chart(bar)
+    st.plotly_chart(bar,key = "bar")
 
 st.subheader('Binning Options')
 add_vertical_space(2)
