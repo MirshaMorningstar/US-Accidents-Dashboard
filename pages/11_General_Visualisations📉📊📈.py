@@ -88,19 +88,25 @@ add_vertical_space(5)
 df['Start_Time'] = pd.to_datetime(df['Start_Time'])
 df['Weekday'] = df['Start_Time'].dt.day_name()
 c1,c2 = st.columns(2)
+# Fix the pie chart plotting
 with c1:
-    # Pie chart using Plotly Express
     st.markdown('##### Accidents by Day of the Week')
     week_day_counts = df['Weekday'].value_counts()
-    print(df['Weekday'])
 
-    fig = px.pie(df, names=week_day_counts.index, values=week_day_counts.values, 
-                title='Accidents by Day of the Week', color_discrete_sequence=['skyblue', 'lightgreen', 'lightcoral', 'orange', 'lightyellow', 'lightpink', 'lightskyblue'])
+    pie_df = pd.DataFrame({
+        'Weekday': week_day_counts.index,
+        'Count': week_day_counts.values
+    })
+
+    fig = px.pie(pie_df, names='Weekday', values='Count', 
+                title='Accidents by Day of the Week',
+                color_discrete_sequence=['skyblue', 'lightgreen', 'lightcoral', 'orange', 'lightyellow', 'lightpink', 'lightskyblue'])
+
     fig.update_traces(textposition='inside', textinfo='percent+label')
     fig.update_layout(title_font_size=16, title_font_color='purple')
-    
-                    
-    st.plotly_chart(fig,use_container_width=True)
+
+    st.plotly_chart(fig, use_container_width=True)
+
 
 with c2:
     # Scatter plot using Plotly Express
