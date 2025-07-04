@@ -53,9 +53,10 @@ if uploaded_file is not None:
     st.write(df)
     st.write('---')
 
-    pr = ProfileReport(df, explorative=True)
     st.header('**Dataset Profiling Report**')
-    st_profile_report(pr)
+    with st.spinner("Generating profiling report... this may take a few seconds..."):
+        pr = ProfileReport(df, explorative=True, minimal=True)
+        st_profile_report(pr)
 
 else:
     st.info('Awaiting for CSV file to be uploaded.')
@@ -64,12 +65,15 @@ else:
     if st.button('Press to use our Example "US Accidents" Dataset...'):
         try:
             df = pd.read_csv("US_Accidents_1000.csv")
+            df = df.sample(n=500, random_state=42)  # Use only 500 rows
             st.header('**Input DataFrame**')
             st.write(df)
             st.write('---')
 
-            pr = ProfileReport(df, explorative=True)
             st.header('**Dataset Profiling Report**')
-            st_profile_report(pr)
+            with st.spinner("Generating profiling report... this may take a few seconds..."):
+                pr = ProfileReport(df, explorative=True, minimal=True)
+                st_profile_report(pr)
+                
         except FileNotFoundError:
             st.error("The example dataset 'US_Accidents_1000.csv' is missing. Please add it to your root directory.")
