@@ -26,3 +26,7 @@ st-pages
 streamlit_extras
 mlxtend
 folium
+streamlit==1.35.0
+ydata-profiling
+streamlit_pandas_profiling
+streamlit-extras
