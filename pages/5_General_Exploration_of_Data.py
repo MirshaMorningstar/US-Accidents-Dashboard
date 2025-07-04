@@ -3,15 +3,13 @@ import pandas as pd
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from ydata_profiling import ProfileReport
-import re
-import base64
-import streamlit.components.v1 as components
-
-# --- Page Configuration ---
+from streamlit_pandas_profiling import st_profile_report
+import streamlit.components.v1 as components # important for rendering pandas report inside html
+# Set page configuration
 st.set_page_config(
     initial_sidebar_state="collapsed",
     page_title="The Exploratory Data Analysis Window",
-    page_icon="analysis.png",
+    page_icon="analysis.png",  # Make sure this file exists
     menu_items={
         'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
         'Report a bug': "mailto:a.k.mirsha9@gmail.com",
@@ -19,43 +17,8 @@ st.set_page_config(
     }
 )
 
-# --- Session State Setup ---
-if "df" not in st.session_state:
-    st.session_state.df = None
-if "eda_report_html" not in st.session_state:
-    st.session_state.eda_report_html = None
-if "report_ready" not in st.session_state:
-    st.session_state.report_ready = False
-
-# --- Utility Functions ---
-def strip_html_tags(html_str):
-    html_str = re.sub(r"(?is)<(html|head|body).*?>", "", html_str)
-    html_str = re.sub(r"(?is)</(html|head|body)>", "", html_str)
-    return html_str
-
-@st.cache_data
-def load_csv(file):
-    return pd.read_csv(file)
-
-def generate_report(df):
-    sampled_df = df.sample(n=min(500, len(df)), random_state=42)
-    profile = ProfileReport(sampled_df, explorative=True, minimal=True)
-    full_html = profile.to_html()
-    safe_html = strip_html_tags(full_html)
-
-    st.session_state.eda_report_html = safe_html
-
-    # Download Button
-    b64 = base64.b64encode(full_html.encode()).decode()
-    st.markdown(
-        f'<a href="data:text/html;base64,{b64}" download="EDA_Report.html">📥 Download Full Report</a>',
-        unsafe_allow_html=True
-    )
-
-    st.session_state.report_ready = True
-
-# --- UI Header ---
-st.markdown("# **The Exploratory Data Analysis (EDA) Window**")
+# Title
+st.markdown("# **The Exploratory Data Analysis ( EDA ) Window**")
 add_vertical_space(2)
 st.markdown('''
 :smile: This is the **EDA Window** created in Streamlit using the **pandas-profiling** library. :sparkles:  
@@ -74,36 +37,72 @@ st.text('''
 ''')
 add_vertical_space(2)
 
-# --- Sidebar File Uploader ---
+# Sidebar file uploader
 with st.sidebar.header('1. Upload your CSV data'):
     uploaded_file = st.sidebar.file_uploader("Upload your input CSV file", type=["csv"])
     st.sidebar.markdown("[Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/delaney_solubility_with_descriptors.csv)")
 
-# --- Upload Flow ---
+@st.cache_data
+def load_csv(file):
+    return pd.read_csv(file)
+
+# Process uploaded file
 if uploaded_file is not None:
-    st.session_state.df = load_csv(uploaded_file)
+    df = load_csv(uploaded_file)
+    df = df.sample(n=min(500, len(df)), random_state=42) # Use only 500 rows
+    st.header('**Input DataFrame**')
+    st.write(df)
+    st.write('---')
 
-# --- Button to Use Example Dataset ---
-if st.button('👉 Use Example "US Accidents" Dataset'):
-    try:
-        st.session_state.df = pd.read_csv("US_Accidents_1000.csv")
-    except FileNotFoundError:
-        st.error("The example dataset 'US_Accidents_1000.csv' is missing. Please add it to your root directory.")
+    st.header('**Dataset Profiling Report**')
+    with st.spinner("Generating profiling report... this may take a few seconds..."):
+        pr = ProfileReport(df, explorative=True, minimal=True)
+        # Convert report to HTML string
+        # Save to file (so it doesn't run embedded JS from memory)
+        report_path = "/tmp/profile_report.html"
+        pr.to_file(report_path)
 
-# --- Display and Generate Button ---
-if st.session_state.df is not None:
-    st.header("**Input DataFrame**")
-    st.dataframe(st.session_state.df, use_container_width=True)
-    st.write("---")
+        st.success("✅ Report generated successfully!")
 
-    if st.button("🔍 Generate EDA Report"):
-        with st.spinner("⏳ Generating profiling report..."):
-            generate_report(st.session_state.df)
+        # Embed safely using iframe with sandbox mode
+        components.html(f"""
+            <iframe src="file://{report_path}" 
+                    width="100%" height="900px" 
+                    style="border:none;" 
+                    sandbox="allow-same-origin allow-scripts allow-popups">
+            </iframe>
+        """, height=910)
 
-# --- Report Rendering ---
-if st.session_state.report_ready and st.session_state.eda_report_html:
-    st.success("✅ Report generated. Rendering below:")
-    components.html(st.session_state.eda_report_html, height=900, scrolling=True)
+else:
+    st.info('Awaiting for CSV file to be uploaded.')
+    add_vertical_space(2)
 
-elif st.session_state.df is None:
-    st.info("📂 Please upload a CSV file or click the example button to proceed.")
+    if st.button('Press to use our Example "US Accidents" Dataset...'):
+        try:
+            df = pd.read_csv("US_Accidents_1000.csv")
+            df = df.sample(n=min(500, len(df)), random_state=42) # Use only 500 rows
+            st.header('**Input DataFrame**')
+            st.write(df)
+            st.write('---')
+
+            st.header('**Dataset Profiling Report**')
+            with st.spinner("Generating profiling report... this may take a few seconds..."):
+                pr = ProfileReport(df, explorative=True, minimal=True)
+                # Convert report to HTML string
+                # Save to file (so it doesn't run embedded JS from memory)
+                report_path = "/tmp/profile_report.html"
+                pr.to_file(report_path)
+        
+                st.success("✅ Report generated successfully!")
+        
+                # Embed safely using iframe with sandbox mode
+                components.html(f"""
+                    <iframe src="file://{report_path}" 
+                            width="100%" height="900px" 
+                            style="border:none;" 
+                            sandbox="allow-same-origin allow-scripts allow-popups">
+                    </iframe>
+                """, height=910)
+                
+        except FileNotFoundError:
+            st.error("The example dataset 'US_Accidents_1000.csv' is missing. Please add it to your root directory.")
