@@ -5,6 +5,7 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 from ydata_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
 import re
+import base64
 import streamlit.components.v1 as components # important for rendering pandas report inside html
 # Set page configuration
 st.set_page_config(
