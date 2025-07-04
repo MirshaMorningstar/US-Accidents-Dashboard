@@ -58,10 +58,20 @@ if uploaded_file is not None:
     with st.spinner("Generating profiling report... this may take a few seconds..."):
         pr = ProfileReport(df, explorative=True, minimal=True)
         # Convert report to HTML string
-        report_html = pr.to_html()
+        # Save to file (so it doesn't run embedded JS from memory)
+        report_path = "/tmp/profile_report.html"
+        pr.to_file(report_path)
+
         st.success("✅ Report generated successfully!")
-        # Render using HTML iframe (most stable way)
-        components.html(report_html, height=900, scrolling=True)
+
+        # Embed safely using iframe with sandbox mode
+        components.html(f"""
+            <iframe src="file://{report_path}" 
+                    width="100%" height="900px" 
+                    style="border:none;" 
+                    sandbox="allow-same-origin allow-scripts allow-popups">
+            </iframe>
+        """, height=910)
 
 else:
     st.info('Awaiting for CSV file to be uploaded.')
@@ -79,10 +89,20 @@ else:
             with st.spinner("Generating profiling report... this may take a few seconds..."):
                 pr = ProfileReport(df, explorative=True, minimal=True)
                 # Convert report to HTML string
-                report_html = pr.to_html()
+                # Save to file (so it doesn't run embedded JS from memory)
+                report_path = "/tmp/profile_report.html"
+                pr.to_file(report_path)
+        
                 st.success("✅ Report generated successfully!")
-                # Render using HTML iframe (most stable way)
-                components.html(report_html, height=900, scrolling=True)
+        
+                # Embed safely using iframe with sandbox mode
+                components.html(f"""
+                    <iframe src="file://{report_path}" 
+                            width="100%" height="900px" 
+                            style="border:none;" 
+                            sandbox="allow-same-origin allow-scripts allow-popups">
+                    </iframe>
+                """, height=910)
                 
         except FileNotFoundError:
             st.error("The example dataset 'US_Accidents_1000.csv' is missing. Please add it to your root directory.")
