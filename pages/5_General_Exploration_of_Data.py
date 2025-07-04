@@ -4,6 +4,7 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from ydata_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
+import re
 import streamlit.components.v1 as components # important for rendering pandas report inside html
 # Set page configuration
 st.set_page_config(
@@ -60,6 +61,11 @@ if uploaded_file is not None:
         # Convert report to HTML string
         # Save to file (so it doesn't run embedded JS from memory)
         full_html = pr.to_html()
+        b64 = base64.b64encode(full_html.encode()).decode()
+        st.markdown(
+            f'<a href="data:text/html;base64,{b64}" download="EDA_Report.html">📥 Download Full Report</a>',
+            unsafe_allow_html=True
+        )
         
         # Strip <html>, <head>, and <body> tags to prevent app-in-app
         def strip_html_tags(html):
@@ -90,6 +96,11 @@ else:
                 # Convert report to HTML string
                 # Save to file (so it doesn't run embedded JS from memory)
                 full_html = pr.to_html()
+                b64 = base64.b64encode(full_html.encode()).decode()
+                st.markdown(
+                    f'<a href="data:text/html;base64,{b64}" download="EDA_Report.html">📥 Download Full Report</a>',
+                    unsafe_allow_html=True
+                )
         
                 # Strip <html>, <head>, and <body> tags to prevent app-in-app
                 def strip_html_tags(html):
