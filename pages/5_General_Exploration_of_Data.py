@@ -22,7 +22,6 @@ st.markdown("# **The Exploratory Data Analysis ( EDA ) Window**")
 add_vertical_space(2)
 st.markdown('''
 :smile: This is the **EDA Window** created in Streamlit using the **pandas-profiling** library. :sparkles:  
-**Credit: :crossed_flags:** App built in `Python` + `Streamlit`. Refer our [Documentation](https://drive.google.com/drive/folders/1Amtvj8MfXswe0AVTreA4IjSG2UeOl4Lt?usp=sharing)
 ---
 ''')
 
