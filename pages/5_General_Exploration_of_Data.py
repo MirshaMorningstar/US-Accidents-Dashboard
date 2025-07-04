@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from ydata_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
-
+import streamlit.components.v1 as components # important for rendering pandas report inside html
 # Set page configuration
 st.set_page_config(
     initial_sidebar_state="collapsed",
@@ -49,6 +49,7 @@ def load_csv(file):
 # Process uploaded file
 if uploaded_file is not None:
     df = load_csv(uploaded_file)
+    df = df.sample(n=min(500, len(df)), random_state=42) # Use only 500 rows
     st.header('**Input DataFrame**')
     st.write(df)
     st.write('---')
@@ -56,7 +57,11 @@ if uploaded_file is not None:
     st.header('**Dataset Profiling Report**')
     with st.spinner("Generating profiling report... this may take a few seconds..."):
         pr = ProfileReport(df, explorative=True, minimal=True)
-        st_profile_report(pr)
+        # Convert report to HTML string
+        report_html = pr.to_html()
+        st.success("✅ Report generated successfully!")
+        # Render using HTML iframe (most stable way)
+        components.html(report_html, height=900, scrolling=True)
 
 else:
     st.info('Awaiting for CSV file to be uploaded.')
@@ -65,7 +70,7 @@ else:
     if st.button('Press to use our Example "US Accidents" Dataset...'):
         try:
             df = pd.read_csv("US_Accidents_1000.csv")
-            df = df.sample(n=500, random_state=42)  # Use only 500 rows
+            df = df.sample(n=min(500, len(df)), random_state=42) # Use only 500 rows
             st.header('**Input DataFrame**')
             st.write(df)
             st.write('---')
@@ -73,7 +78,11 @@ else:
             st.header('**Dataset Profiling Report**')
             with st.spinner("Generating profiling report... this may take a few seconds..."):
                 pr = ProfileReport(df, explorative=True, minimal=True)
-                st_profile_report(pr)
+                # Convert report to HTML string
+                report_html = pr.to_html()
+                st.success("✅ Report generated successfully!")
+                # Render using HTML iframe (most stable way)
+                components.html(report_html, height=900, scrolling=True)
                 
         except FileNotFoundError:
             st.error("The example dataset 'US_Accidents_1000.csv' is missing. Please add it to your root directory.")
