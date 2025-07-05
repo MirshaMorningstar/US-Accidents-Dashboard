@@ -179,7 +179,7 @@ else:
     st.info('Awaiting for CSV file to be uploaded.')
     if st.button('Press to use Example Dataset'):
         file_path = os.path.join(os.path.dirname(__file__), "..", "US_Norm.csv")
-        data = pd.read_csv(filepath)
+        data = pd.read_csv(file_path)
         
 
         st.markdown('The **US Accidents** dataset is used as the example.')
