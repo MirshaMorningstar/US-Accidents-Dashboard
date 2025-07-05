@@ -43,9 +43,6 @@ elif authentication_status:
         # ----- 🔖 Introduction -----
         Page("pages/0_About_This_Project.py", "📌 About This Project"),
 
-        # ----- 🔐 Account -----
-        Page("pages/1_Authentication.py", "🔐 Log Out"),
-
         # ----- 🎨 UI Personalization -----
         Page("pages/2_Change_Theme.py", "🎨 Change Theme"),
         Page("pages/3_Color_Palette_Picker.py", "🌈 Color Palette Picker"),
