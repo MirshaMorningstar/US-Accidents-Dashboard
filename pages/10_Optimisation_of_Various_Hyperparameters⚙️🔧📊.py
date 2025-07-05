@@ -137,7 +137,7 @@ def build_model(df):
     # Pivoting the data
     grid_reset = grid_contour.reset_index()
     grid_reset.columns = ['max_features', 'n_estimators', 'R2']
-    grid_pivot = grid_reset.pivot('max_features', 'n_estimators')
+    grid_pivot = grid_reset.pivot(index='max_features', columns='n_estimators', values='R2')
     x = grid_pivot.columns.levels[1].values
     y = grid_pivot.index.values
     z = grid_pivot.values
