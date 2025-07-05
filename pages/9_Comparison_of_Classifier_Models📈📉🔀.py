@@ -71,7 +71,7 @@ def build_model(df):
     st.subheader('3. Plot of Model Performance (Test set)')
 
 
-    with st.markdown('## **Accuracy**'):
+    with st.markdown('### **Accuracy**'):
         # Tall
         predictions_test["Accuracy"] = [0 if i < 0 else i for i in predictions_test["Accuracy"] ]
         plt.figure(figsize=(3, 9))
@@ -88,7 +88,7 @@ def build_model(df):
     st.pyplot(plt)
     st.markdown(imagedownload(plt,'plot-acc-wide.pdf'), unsafe_allow_html=True)
 
-    with st.markdown('## **Balanced Accuracy**'):
+    with st.markdown('### **Balanced Accuracy**'):
         # Tall
         predictions_test["Balanced Accuracy"] = [0 if i < 0 else i for i in predictions_test["Balanced Accuracy"] ]
         plt.figure(figsize=(3, 9))
@@ -106,7 +106,7 @@ def build_model(df):
     st.markdown(imagedownload(plt,'plot-bal-acc-wide.pdf'), unsafe_allow_html=True)
 
 
-    with st.markdown('## **F1 Score**'):
+    with st.markdown('### **F1 Score**'):
         # Tall
         predictions_test["F1 Score"] = [0 if i < 0 else i for i in predictions_test["F1 Score"] ]
         plt.figure(figsize=(3, 9))
@@ -125,7 +125,7 @@ def build_model(df):
 
    
 
-    with st.markdown('## **Calculation time**'):
+    with st.markdown('### **Calculation time**'):
         # Tall
         predictions_test["Time Taken"] = [0 if i < 0 else i for i in predictions_test["Time Taken"] ]
         plt.figure(figsize=(3, 9))
