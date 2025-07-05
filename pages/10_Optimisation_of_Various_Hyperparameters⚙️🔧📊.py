@@ -96,44 +96,48 @@ def build_model(df):
     grid = GridSearchCV(clf, param_grid, cv=3)
     grid.fit(X_train, Y_train)
 
-    st.subheader("🔍 Model Performance")
-
     Y_pred = grid.predict(X_test)
-    st.write('**R² Score:**', r2_score(Y_test, Y_pred))
-    st.write('**Mean Squared Error:**', mean_squared_error(Y_test, Y_pred))
-    st.write('**Best Parameters:**', grid.best_params_)
-    st.write('**All Parameters:**')
-    st.write(grid.get_params())
 
-    # Process grid search results
-    results_df = pd.concat(
-        [pd.DataFrame(grid.cv_results_["params"]),
-         pd.DataFrame(grid.cv_results_["mean_test_score"], columns=["R2"])],
-        axis=1
-    )
-    st.markdown(filedownload(results_df), unsafe_allow_html=True)
+    c1,c2 = st.columns()
 
-    grouped = results_df.groupby(['max_features', 'n_estimators']).mean().reset_index()
-    pivot = grouped.pivot(index='max_features', columns='n_estimators', values='R2')
+    with c1:
+        st.write('**R² Score:**', r2_score(Y_test, Y_pred))
+        st.write('**Mean Squared Error:**', mean_squared_error(Y_test, Y_pred))
+        st.write('**Best Parameters:**', grid.best_params_)
+        st.write('**All Parameters:**')
+        st.write(grid.get_params())
+    
+        # Process grid search results
+        results_df = pd.concat(
+            [pd.DataFrame(grid.cv_results_["params"]),
+             pd.DataFrame(grid.cv_results_["mean_test_score"], columns=["R2"])],
+            axis=1
+        )
+        st.markdown(filedownload(results_df), unsafe_allow_html=True)
 
-    x_vals = pivot.columns.values
-    y_vals = pivot.index.values
-    z_vals = pivot.values
+    with c2:
 
-    fig = go.Figure(data=[go.Surface(z=z_vals, x=x_vals, y=y_vals)])
-    fig.update_layout(
-        title='Hyperparameter Tuning 3D Surface',
-        scene=dict(
-            xaxis_title='n_estimators',
-            yaxis_title='max_features',
-            zaxis_title='R2 Score'
-        ),
-        autosize=False,
-        width=800,
-        height=800,
-        margin=dict(l=50, r=50, b=65, t=90)
-    )
-    st.plotly_chart(fig)
+        grouped = results_df.groupby(['max_features', 'n_estimators']).mean().reset_index()
+        pivot = grouped.pivot(index='max_features', columns='n_estimators', values='R2')
+    
+        x_vals = pivot.columns.values
+        y_vals = pivot.index.values
+        z_vals = pivot.values
+    
+        fig = go.Figure(data=[go.Surface(z=z_vals, x=x_vals, y=y_vals)])
+        fig.update_layout(
+            title='Hyperparameter Tuning 3D Surface',
+            scene=dict(
+                xaxis_title='n_estimators',
+                yaxis_title='max_features',
+                zaxis_title='R2 Score'
+            ),
+            autosize=False,
+            width=800,
+            height=800,
+            margin=dict(l=50, r=50, b=65, t=90)
+        )
+        st.plotly_chart(fig)
 
 # ----------------------------
 # Main Panel
@@ -153,4 +157,7 @@ else:
         except:
             df = pd.read_csv("US_Norm.csv")  # fallback if root file exists
         st.write(df.head())
-        build_model(df)
+    
+        st.subheader("🔍 Grid Search CV on RandomForest Classifier Model Performance")    
+        with st.spinner("Generating profiling report... this may take a few seconds..."):
+            build_model(df)
