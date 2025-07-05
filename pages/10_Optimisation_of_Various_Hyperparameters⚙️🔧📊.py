@@ -98,7 +98,7 @@ def build_model(df):
 
     Y_pred = grid.predict(X_test)
 
-    c1,c2 = st.columns()
+    c1,c2 = st.columns(2)
 
     with c1:
         st.write('**R² Score:**', r2_score(Y_test, Y_pred))
