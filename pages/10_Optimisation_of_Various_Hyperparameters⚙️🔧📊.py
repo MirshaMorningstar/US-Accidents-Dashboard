@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.datasets import load_diabetes
 from streamlit_extras.add_vertical_space import add_vertical_space
+import os
 
 #---------------------------------#
 # Page layout
