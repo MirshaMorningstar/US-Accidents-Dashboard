@@ -3,186 +3,154 @@ import pandas as pd
 import numpy as np
 import base64
 import plotly.graph_objects as go
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV
-from sklearn.datasets import load_diabetes
 from streamlit_extras.add_vertical_space import add_vertical_space
 import os
 
-#---------------------------------#
+# ----------------------------
 # Page layout
-## Page expands to full width
-st.set_page_config(initial_sidebar_state="collapsed",page_title='The Machine Learning Hyperparameter Optimization Window',
-          menu_items={
-         'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
-         'Report a bug': "mailto:a.k.mirsha9@gmail.com",
-         'About': "### This is an extremely cool web application built as a part of my Data Science Mini Project on my ' US Accidents Dataset '\n"
-     },
+st.set_page_config(
+    page_title='Hyperparameter Optimization Window (Classification)',
+    layout='wide',
+    initial_sidebar_state="collapsed",
     page_icon="image.png",
-    layout='wide')
+    menu_items={
+        'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
+        'Report a bug': "mailto:a.k.mirsha9@gmail.com",
+        'About': "### Hyperparameter tuning tool for RandomForestClassifier on US Accidents Dataset"
+    }
+)
 
-#---------------------------------#
-#---------------------------------#
-st.write("""
-# The Machine Learning Hyperparameter Optimization Window
-**(Classification Edition)**
-
-In this implementation, the *DecisionTreeClassifier()* function is used in this app for building a classification model using the **Decision Tree** algorithm.""")
-
+st.title("⚙️ Machine Learning Hyperparameter Optimization (Classification Edition)")
 add_vertical_space(2)
 
 st.write("""
-Moreover all the hyper parameters that are essential to build the model are extracted as inputs from the user interactively so that users can fine tune their model's performance based on the chosen hyperparameter.
+This tool allows you to perform hyperparameter tuning on a classification model using `RandomForestClassifier`.
+Use the sidebar to configure your dataset and parameters. A 3D surface will be generated for selected hyperparameters.
 """)
 
-#---------------------------------#
-# Sidebar - Collects user input features into dataframe
+# ----------------------------
+# Sidebar: Dataset & parameters
 st.sidebar.header('Upload your CSV data')
 uploaded_file = st.sidebar.file_uploader("Upload your input CSV file", type=["csv"])
-st.sidebar.markdown("""
-[Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/delaney_solubility_with_descriptors.csv)
-""")
 
-# Sidebar - Specify parameter settings
-st.sidebar.header('Set Parameters')
-split_size = st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80, 5)
+st.sidebar.header('Set Split Ratio')
+split_size = st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80, 5) / 100
 
-st.sidebar.subheader('Learning Parameters')
-parameter_n_estimators = st.sidebar.slider('Number of estimators (n_estimators)', 0, 500, (10,110), 10)
-parameter_n_estimators_step = st.sidebar.number_input('Step size for n_estimators', 10)
-st.sidebar.write('---')
-parameter_max_features = st.sidebar.slider('Max features (max_features)', 1, 50, (5,12) , 1)
-st.sidebar.number_input('Step size for max_features', 1)
-st.sidebar.write('---')
-parameter_min_samples_split = st.sidebar.slider('Minimum number of samples required to split an internal node (min_samples_split)', 1, 10, 2, 1)
-parameter_min_samples_leaf = st.sidebar.slider('Minimum number of samples required to be at a leaf node (min_samples_leaf)', 1, 10, 2, 1)
+st.sidebar.header('Learning Parameters')
+n_est_range = st.sidebar.slider('n_estimators range', 10, 300, (50, 150), step=10)
+n_estimators_step = st.sidebar.number_input('Step size for n_estimators', 10)
 
-st.sidebar.subheader('General Parameters')
-parameter_random_state = st.sidebar.slider('Seed number (random_state)', 0, 1000, 42, 1)
-parameter_criterion = st.sidebar.select_slider('Performance measure (criterion)', options=['log_loss','entropy','gini'])
-parameter_bootstrap = st.sidebar.select_slider('Bootstrap samples when building trees (bootstrap)', options=[True, False])
-parameter_oob_score = st.sidebar.select_slider('Whether to use out-of-bag samples to estimate the R^2 on unseen data (oob_score)', options=[False, True])
-parameter_n_jobs = st.sidebar.select_slider('Number of jobs to run in parallel (n_jobs)', options=[1, -1])
+max_feat_range = st.sidebar.slider('max_features range', 2, 30, (5, 15))
+# (optional) Can expose step size later
 
+min_samples_split = st.sidebar.slider('min_samples_split', 2, 10, 2)
+min_samples_leaf = st.sidebar.slider('min_samples_leaf', 1, 10, 1)
 
-n_estimators_range = np.arange(parameter_n_estimators[0], parameter_n_estimators[1]+parameter_n_estimators_step, parameter_n_estimators_step)
-max_features_range = np.arange(parameter_max_features[0], parameter_max_features[1]+1, 1)
-param_grid = dict(max_features=max_features_range, n_estimators=n_estimators_range)
+st.sidebar.header('General Parameters')
+criterion = st.sidebar.selectbox('Criterion', ['gini', 'entropy', 'log_loss'])
+bootstrap = st.sidebar.selectbox('Bootstrap', [True, False])
+oob_score = st.sidebar.selectbox('Use OOB Score', [False, True])
+random_state = st.sidebar.slider('Random State', 0, 1000, 42)
+n_jobs = st.sidebar.selectbox('n_jobs (parallelism)', [1, -1])
 
-#---------------------------------#
-# Main panel
-
-# Displays the dataset
-st.subheader('Dataset')
-
-
-
-#---------------------------------#
-# Model building
-
+# ----------------------------
+# Function to download result CSV
 def filedownload(df):
     csv = df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()  # strings <-> bytes conversions
-    href = f'<a href="data:file/csv;base64,{b64}" download="model_performance.csv">Download CSV File</a>'
-    return href
+    b64 = base64.b64encode(csv.encode()).decode()
+    return f'<a href="data:file/csv;base64,{b64}" download="model_performance.csv">📥 Download Results as CSV</a>'
 
+# ----------------------------
+# Model building and tuning
 def build_model(df):
-    X = df.drop(columns=['Severity','Start_Time'])  # Features
-    Y = df['Severity']  # Target variable
-    
-    st.markdown('A model is being built to predict the following **Y** variable:')
+    try:
+        X = df.drop(columns=['Severity', 'Start_Time'], errors='ignore')
+        Y = df['Severity']
+    except KeyError:
+        st.error("Dataset must include 'Severity' as target and 'Start_Time' column.")
+        return
+
+    st.markdown('### Target Variable')
     st.info(Y.name)
 
-    # Data splitting
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=split_size)
-    #X_train.shape, Y_train.shape
-    #X_test.shape, Y_test.shape
-    #RandomForestClassifier(n_estimators=100, *, criterion='gini', max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='sqrt', max_leaf_nodes=None, min_impurity_decrease=0.0, bootstrap=True, oob_score=False, n_jobs=None, random_state=None, verbose=0, warm_start=False, class_weight=None, ccp_alpha=0.0, max_samples=None, monotonic_cst=None)[source]
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=1 - split_size, random_state=random_state)
 
-    rf = RandomForestClassifier(n_estimators=parameter_n_estimators,
-        random_state=parameter_random_state,
-        max_features=parameter_max_features,
-        criterion=parameter_criterion,
-        min_samples_split=parameter_min_samples_split,
-        min_samples_leaf=parameter_min_samples_leaf,
-        bootstrap=parameter_bootstrap,
-        oob_score=parameter_oob_score,
-        n_jobs=parameter_n_jobs)
+    param_grid = {
+        'n_estimators': np.arange(n_est_range[0], n_est_range[1] + 1, n_estimators_step),
+        'max_features': list(range(max_feat_range[0], max_feat_range[1] + 1))
+    }
 
-    grid = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5)
+    clf = RandomForestClassifier(
+        criterion=criterion,
+        min_samples_split=min_samples_split,
+        min_samples_leaf=min_samples_leaf,
+        bootstrap=bootstrap,
+        oob_score=oob_score,
+        random_state=random_state,
+        n_jobs=n_jobs
+    )
+
+    grid = GridSearchCV(clf, param_grid, cv=3)
     grid.fit(X_train, Y_train)
 
-    st.subheader('Model Performance')
+    st.subheader("🔍 Model Performance")
 
-    Y_pred_test = grid.predict(X_test)
-    st.write('Coefficient of determination ($R^2$):')
-    st.info( r2_score(Y_test, Y_pred_test) )
-
-    st.write('Error (MSE or MAE):')
-    st.info( mean_squared_error(Y_test, Y_pred_test) )
-
-    st.write("The best parameters are %s with a score of %0.2f"
-      % (grid.best_params_, grid.best_score_))
-
-    st.subheader('Model Parameters')
+    Y_pred = grid.predict(X_test)
+    st.write('**R² Score:**', r2_score(Y_test, Y_pred))
+    st.write('**Mean Squared Error:**', mean_squared_error(Y_test, Y_pred))
+    st.write('**Best Parameters:**', grid.best_params_)
+    st.write('**All Parameters:**')
     st.write(grid.get_params())
 
-    #-----Process grid data-----#
-    grid_results = pd.concat([pd.DataFrame(grid.cv_results_["params"]),pd.DataFrame(grid.cv_results_["mean_test_score"], columns=["R2"])],axis=1)
-    # Segment data into groups based on the 2 hyperparameters
-    grid_contour = grid_results.groupby(['max_features','n_estimators']).mean()
-    # Pivoting the data
-    grid_reset = grid_contour.reset_index()
-    grid_reset.columns = ['max_features', 'n_estimators', 'R2']
-    grid_pivot = grid_reset.pivot(index='max_features', columns='n_estimators', values='R2')
-    x = grid_pivot.columns.levels[1].values
-    y = grid_pivot.index.values
-    z = grid_pivot.values
+    # Process grid search results
+    results_df = pd.concat(
+        [pd.DataFrame(grid.cv_results_["params"]),
+         pd.DataFrame(grid.cv_results_["mean_test_score"], columns=["R2"])],
+        axis=1
+    )
+    st.markdown(filedownload(results_df), unsafe_allow_html=True)
 
-    #-----Plot-----#
-    layout = go.Layout(
-            xaxis=go.layout.XAxis(
-              title=go.layout.xaxis.Title(
-              text='n_estimators')
-             ),
-             yaxis=go.layout.YAxis(
-              title=go.layout.yaxis.Title(
-              text='max_features')
-            ) )
-    fig = go.Figure(data= [go.Surface(z=z, y=y, x=x)], layout=layout )
-    fig.update_layout(title='Hyperparameter tuning',
-                      scene = dict(
-                        xaxis_title='n_estimators',
-                        yaxis_title='max_features',
-                        zaxis_title='R2'),
-                      autosize=False,
-                      width=800, height=800,
-                      margin=dict(l=65, r=50, b=65, t=90))
+    grouped = results_df.groupby(['max_features', 'n_estimators']).mean().reset_index()
+    pivot = grouped.pivot(index='max_features', columns='n_estimators', values='R2')
+
+    x_vals = pivot.columns.values
+    y_vals = pivot.index.values
+    z_vals = pivot.values
+
+    fig = go.Figure(data=[go.Surface(z=z_vals, x=x_vals, y=y_vals)])
+    fig.update_layout(
+        title='Hyperparameter Tuning 3D Surface',
+        scene=dict(
+            xaxis_title='n_estimators',
+            yaxis_title='max_features',
+            zaxis_title='R2 Score'
+        ),
+        autosize=False,
+        width=800,
+        height=800,
+        margin=dict(l=50, r=50, b=65, t=90)
+    )
     st.plotly_chart(fig)
 
-    #-----Save grid data-----#
-    x = pd.DataFrame(x)
-    y = pd.DataFrame(y)
-    z = pd.DataFrame(z)
-    df = pd.concat([x,y,z], axis=1)
-    st.markdown(filedownload(grid_results), unsafe_allow_html=True)
+# ----------------------------
+# Main Panel
+st.subheader('📄 Dataset Preview')
 
-#---------------------------------#
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
-    st.write(df)
+    st.write(df.head())
     build_model(df)
 else:
-    st.info('Awaiting for CSV file to be uploaded.')
-    if st.button('Press to use Example Dataset'):
-        file_path = os.path.join(os.path.dirname(__file__), "..", "US_Norm.csv")
-        data = pd.read_csv(file_path)
-        
-
-        st.markdown('The **US Accidents** dataset is used as the example.')
-        st.write(data.head(5))
-        build_model(data)
-      
+    st.info("No dataset uploaded.")
+    if st.button('Use Example Dataset'):
+        # Adjust this path for deployment on Streamlit Cloud
+        try:
+            example_path = os.path.join(os.path.dirname(__file__), '..', 'US_Norm.csv')
+            df = pd.read_csv(example_path)
+        except:
+            df = pd.read_csv("US_Norm.csv")  # fallback if root file exists
+        st.write(df.head())
+        build_model(df)
