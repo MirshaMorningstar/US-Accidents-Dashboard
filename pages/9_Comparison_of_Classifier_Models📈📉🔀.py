@@ -56,7 +56,7 @@ def build_model(df):
 
     st.subheader('2. Table of Model Performance')
 
-    ca,cb = st.columns()
+    ca,cb = st.columns(2)
     
     with ca:
         st.write('Training set')
