@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import base64
 import io
+import os
 
 #---------------------------------#
 # Page layout
@@ -221,8 +222,9 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, classification_report
 
+file_path = os.path.join(os.path.dirname(__file__), "..", "US.csv")
+xdata = pd.read_csv(file_path)
 
-xdata = pd.read_csv(r"C:\Users\DELL\Desktop\STREAMLIT\US.csv")
 xdata = xdata.sample(n=1000,random_state=42)
 # Load your dataset
 data = xdata.drop(["ID","Source"],axis=1)
@@ -369,7 +371,8 @@ add_vertical_space(3)
 
 if st.button("SHOW MODELS' COMPARISON REPORT"):
     add_vertical_space(3)
-    data = pd.read_csv(r"C:\Users\DELL\Desktop\STREAMLIT\US_Norm.csv")
+    file_path = os.path.join(os.path.dirname(__file__), "..", "US_Norm.csv")
+    data = pd.read_csv(file_path)
     data = data.drop(["Unnamed: 0","ID","Source","Description","Street"],axis=1)
     build_model(data)
 
