@@ -1,7 +1,3 @@
-# App created by Data Professor http://youtube.com/dataprofessor
-# GitHub repo of this app https://github.com/dataprofessor/ml-auto-app
-# Demo of this app https://share.streamlit.io/dataprofessor/ml-auto-app/main/app.py
-
 import streamlit as st
 import streamlit_extras as stex
 from streamlit_extras.add_vertical_space import add_vertical_space
