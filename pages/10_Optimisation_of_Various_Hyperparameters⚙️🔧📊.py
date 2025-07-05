@@ -177,8 +177,8 @@ if uploaded_file is not None:
 else:
     st.info('Awaiting for CSV file to be uploaded.')
     if st.button('Press to use Example Dataset'):
-        
-        data = pd.read_csv("US_Norm.csv")
+        file_path = os.path.join(os.path.dirname(__file__), "..", "US_Norm.csv")
+        data = pd.read_csv(filepath)
         
 
         st.markdown('The **US Accidents** dataset is used as the example.')
