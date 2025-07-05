@@ -10,7 +10,7 @@ names = ["Mirsha Morningstar", "Rameez Akther", "Chandru", "Mekesh"]
 usernames = ["Mirsha Morningstar", "Rameez", "Chandru", "Mekesh"]
 
 # Load hashed passwords from file
-file_path = Path(__file__).parent / "hashed_pw.pkl"
+file_path = os.path.join(os.path.dirname(__file__), "..", "hashed_pw.pkl")
 with file_path.open("rb") as file:
     hashed_passwords = pickle.load(file)
 
