@@ -159,5 +159,5 @@ else:
         st.write(df.head())
     
         st.subheader("🔍 Grid Search CV on RandomForest Classifier Model Performance")    
-        with st.spinner("Generating profiling report... this may take a few seconds..."):
+        with st.spinner("Training the GridSearch CV Hyperparameter Optimisation on RandomForest Classifier Machine Learning Model... this may take a few minutes..."):
             build_model(df)
