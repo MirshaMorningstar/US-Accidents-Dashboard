@@ -47,6 +47,12 @@ st.set_page_config(initial_sidebar_state="collapsed",page_title='The Machine Lea
      },
      page_icon="classification.png")
 add_vertical_space(2)
+
+# set session state variables to avoid infinite reload
+if predicted_clicked not in st.session_state:
+  st.session_state[predict_clicked] = False
+if show_model_report not in st.session_state:
+  st.session_state[show_model_report] = False
 #---------------------------------#
 # Model building
 def build_model(data):
@@ -355,10 +361,11 @@ if st.button('Press to use our Example "US Accidents Dataset"...'):
               new_data[item]=[st.text_input(f"Enter the value of {item} to be predicted.",value="Evening")]
           
   with c2:
-      if st.button("Predict !!!"):
-        st.session_state.predict_clicked = True
+      if not st.session_state[predicted_clicked]:
+        if st.button("Predict !!!"):
+          st.session_state[predict_clicked] = True
 
-      if st.session_state.get("predict_clicked", False):
+      if st.session_state[predicted_clicked]:
           print("I am inside")
           new_data = pd.DataFrame(new_data)
           # Ensure the new data has the same preprocessing as the training data
@@ -370,11 +377,12 @@ if st.button('Press to use our Example "US Accidents Dataset"...'):
   add_vertical_space(3)
   st.markdown("### Now Click Here to view The Overall Comparsion Report of **25 +** Machine Learning Models...")
   add_vertical_space(3)
-  
-  if st.button("SHOW MODELS' COMPARISON REPORT"):
-    st.session_state.show_model_report = True
+
+  if not st.session_state[show_model_report]:
+    if st.button("SHOW MODELS' COMPARISON REPORT"):
+      st.session_state[show_model_report] = True
     
-  if st.session_state.get("show_model_report", False):
+  if st.session_state[show_model_report]:
       print("I am inside")
       add_vertical_space(3)
       data = pd.read_csv("US_Norm.csv")
