@@ -173,7 +173,9 @@ if st.session_state["example_data_loaded"]:
     if st.session_state["predicted_clicked"]:
         new_df = pd.DataFrame(new_data_input)
         prediction = pipeline.predict(new_df)
-        st.success(f"✅ The {model_name} predicted the target as **{prediction[0]}**")
+        with c2:
+            add_vertical_space(2)
+            st.success(f"✅ The {model_name} predicted the target as **{prediction[0]}**")
 
     add_vertical_space(3)
     st.markdown("### Click below to view the overall comparison report of 25+ ML models.")
@@ -187,15 +189,17 @@ if st.session_state["example_data_loaded"]:
     if st.session_state["show_model_report"]:
         def filedownload(df, filename):
             csv = df.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()
-            return f'<a href="data:file/csv;base64,{b64}" download={filename}>Download {filename}</a>'
-
+            b64 = base64.b64encode(csv.encode()).decode()  # strings <-> bytes conversions
+            href = f'<a href="data:file/csv;base64,{b64}" download={filename}>Download {filename} File</a>'
+            return href
+        
         def imagedownload(plt, filename):
             s = io.BytesIO()
             plt.savefig(s, format='pdf', bbox_inches='tight')
             plt.close()
-            b64 = base64.b64encode(s.getvalue()).decode()
-            return f'<a href="data:image/png;base64,{b64}" download={filename}>Download {filename}</a>'
+            b64 = base64.b64encode(s.getvalue()).decode()  # strings <-> bytes conversions
+            href = f'<a href="data:image/png;base64,{b64}" download={filename}>Download {filename} File</a>'
+            return href
 
         def build_model(data):
             X = data.drop(columns=['Severity', 'Start_Time'], errors='ignore')
