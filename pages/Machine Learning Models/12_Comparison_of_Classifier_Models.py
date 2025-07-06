@@ -16,6 +16,25 @@ import base64
 import io
 import os
 
+
+from sklearn.ensemble import (RandomForestClassifier, ExtraTreesClassifier, BaggingClassifier, 
+                              AdaBoostClassifier)
+from sklearn.svm import SVC, NuSVC, LinearSVC
+from lightgbm import LGBMClassifier
+from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
+from sklearn.discriminant_analysis import (QuadraticDiscriminantAnalysis, LinearDiscriminantAnalysis)
+from sklearn.naive_bayes import GaussianNB, BernoulliNB
+from sklearn.neighbors import KNeighborsClassifier, NearestCentroid
+from sklearn.linear_model import (LogisticRegression, RidgeClassifierCV, RidgeClassifier, 
+                                  PassiveAggressiveClassifier, SGDClassifier, Perceptron)
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.semi_supervised import LabelPropagation, LabelSpreading
+from sklearn.dummy import DummyClassifier
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, classification_report
+
 #---------------------------------#
 # Page layout
 ## Page expands to full width
@@ -201,35 +220,11 @@ else:
     st.info('Awaiting for CSV file to be uploaded.')
     add_vertical_space(1)
     if st.button('Press to use our Example "US Accidents Dataset"...'):
-        data = pd.read_csv("US_Norm.csv")
+        xdata = pd.read_csv("US.csv")
+        xdata = xdata.sample(n=1000,random_state=42)
+        # Load your dataset
+        data = xdata.drop(["ID","Source"],axis=1)
 
-        x = True
-
-
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import (RandomForestClassifier, ExtraTreesClassifier, BaggingClassifier, 
-                              AdaBoostClassifier)
-from sklearn.svm import SVC, NuSVC, LinearSVC
-from lightgbm import LGBMClassifier
-from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
-from sklearn.discriminant_analysis import (QuadraticDiscriminantAnalysis, LinearDiscriminantAnalysis)
-from sklearn.naive_bayes import GaussianNB, BernoulliNB
-from sklearn.neighbors import KNeighborsClassifier, NearestCentroid
-from sklearn.linear_model import (LogisticRegression, RidgeClassifierCV, RidgeClassifier, 
-                                  PassiveAggressiveClassifier, SGDClassifier, Perceptron)
-from sklearn.calibration import CalibratedClassifierCV
-from sklearn.semi_supervised import LabelPropagation, LabelSpreading
-from sklearn.dummy import DummyClassifier
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.metrics import accuracy_score, classification_report
-
-xdata = pd.read_csv("US_Norm.csv")
-
-# Load your dataset
-data = xdata.drop(["ID","Source"],axis=1)
 
 # Assume the last column is the target variable
 X = data.drop(columns=['Severity','Start_Time',"End_Time","Description","Street","Zipcode","Country","Timezone","Airport_Code","Weather_Timestamp","Amenity","Bump","Crossing","Give_Way","Junction","No_Exit","Railway","Roundabout","Station","Stop","Traffic_Calming","Traffic_Signal","Turning_Loop","Civil_Twilight","Nautical_Twilight","Astronomical_Twilight"])  # Features
