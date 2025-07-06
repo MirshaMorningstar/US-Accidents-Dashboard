@@ -49,7 +49,7 @@ st.set_page_config(initial_sidebar_state="collapsed",page_title='The Machine Lea
 add_vertical_space(2)
 #---------------------------------#
 # Model building
-def build_model(df):
+def build_model(data):
     
     X = data.drop(columns=['Severity','Start_Time'])  # Features
     Y = data['Severity']  # Target variable
@@ -212,9 +212,9 @@ st.subheader('1. Dataset')
 add_vertical_space(1)
 
 if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
+    xdata = pd.read_csv(uploaded_file)
     st.markdown('**1.1. Glimpse of dataset**')
-    st.write(df)
+    st.write(xdata)
     x = True
 else:
     st.info('Awaiting for CSV file to be uploaded.')
@@ -222,11 +222,11 @@ else:
     if st.button('Press to use our Example "US Accidents Dataset"...'):
         xdata = pd.read_csv("US.csv")
         xdata = xdata.sample(n=1000,random_state=42)
-        # Load your dataset
-        data = xdata.drop(["ID","Source"],axis=1)
+      
+# Load your dataset
+data = xdata.drop(["ID","Source"],axis=1)
 
-
-# Assume the last column is the target variable
+# Assume the last columnis the target variable
 X = data.drop(columns=['Severity','Start_Time',"End_Time","Description","Street","Zipcode","Country","Timezone","Airport_Code","Weather_Timestamp","Amenity","Bump","Crossing","Give_Way","Junction","No_Exit","Railway","Roundabout","Station","Stop","Traffic_Calming","Traffic_Signal","Turning_Loop","Civil_Twilight","Nautical_Twilight","Astronomical_Twilight"])  # Features
 y = data['Severity']  # Target variable
 
