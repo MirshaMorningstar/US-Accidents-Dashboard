@@ -48,7 +48,7 @@ if authentication_status is False:
 elif authentication_status is None:
     st.warning("Kindly enter your Username and Password 🔐")
 
-elif authentication_status:
+elif authentication_status: # successfully logged in
     st.session_state.logged_in = True
     placeholder1.empty()
     placeholder2.empty()
@@ -56,6 +56,7 @@ elif authentication_status:
     
     
     # --- Show the sidebar menu after login ---
+    auth = st.Page("1_Authentication🔐.py", title="Login for Application Access", icon=":material/search:")
     intro = st.Page("pages/Introduction/2_About_This_Project.py", title="About this Application", icon=":material/search:")
     
     changetheme = st.Page("UI Personalization/3_Change_Theme.py", title="Change Application Theme", icon=":material/search:")
@@ -83,8 +84,7 @@ elif authentication_status:
                 "Machine Learning and Hyperparameter Optimisation": [ml, hyper],
             }
         )
-    else:
-        pg = st.navigation([login_page])
-        
+           
     
-    st.switch_page("pages/UI Personalization/3_Change_Theme.py")  # Redirect after login
+    # Run the selected page
+    pg.run()
