@@ -168,7 +168,7 @@ if st.session_state["example_data_loaded"]:
         if not st.session_state["predicted_clicked"]:
             if st.button("Predict !!!"):
                 st.session_state["predicted_clicked"] = True
-                st.experimental_rerun()
+                st.rerun()
 
     if st.session_state["predicted_clicked"]:
         new_df = pd.DataFrame(new_data_input)
@@ -182,7 +182,7 @@ if st.session_state["example_data_loaded"]:
     if not st.session_state["show_model_report"]:
         if st.button("SHOW MODELS' COMPARISON REPORT"):
             st.session_state["show_model_report"] = True
-            st.experimental_rerun()
+            st.rerun()
 
     if st.session_state["show_model_report"]:
         def filedownload(df, filename):
