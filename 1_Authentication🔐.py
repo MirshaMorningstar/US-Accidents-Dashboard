@@ -56,26 +56,35 @@ elif authentication_status:
     
     
     # --- Show the sidebar menu after login ---
-    introduction = st.Page("pages/Introduction/2_About_This_Project.py", title="About this Project", icon=":material/search:")
+    intro = st.Page("pages/Introduction/2_About_This_Project.py", title="About this Application", icon=":material/search:")
     
     changetheme = st.Page("UI Personalization/3_Change_Theme.py", title="Change Application Theme", icon=":material/search:")
-    search = st.Page("UI Personalization/4_Color_Palette_Picker.py", title="Color Palette Picker", icon=":material/search:")
+    colorpalette = st.Page("UI Personalization/4_Color_Palette_Picker.py", title="Color Palette Picker", icon=":material/search:")
     
-    search = st.Page("Data Pipeline/5_Data_Preprocessing_and_Preparation.py", title="Data Preprocessing and Preparation", icon=":material/search:")
-    search = st.Page("Data Pipeline/6_Visualisation_of_Data_Quality.py", title="Visualisation of Data Quality", icon=":material/search:")
-    search = st.Page("Data Pipeline/7_Feature_Engineering_and_Data_Correlation.py", title="Feature Engineering and Data Correlation Analysis", icon=":material/search:")
+    dataprep = st.Page("Data Pipeline/5_Data_Preprocessing_and_Preparation.py", title="Data Preprocessing and Preparation", icon=":material/search:")
+    dataqual = st.Page("Data Pipeline/6_Visualisation_of_Data_Quality.py", title="Visualisation of Data Quality", icon=":material/search:")
+    featureeng = st.Page("Data Pipeline/7_Feature_Engineering_and_Data_Correlation.py", title="Feature Engineering and Data Correlation Analysis", icon=":material/search:")
     
-    search = st.Page("Exploratory Data Analysis/8_Specific_Exploration_of_Data.py", title="Search", icon=":material/search:")
-    search = st.Page("Exploratory Data Analysis/9_General_Exploration_of_Data.py", title="Search", icon=":material/search:")
-    search = st.Page("Exploratory Data Analysis/10_Inferential_Visualisations.py", title="Search", icon=":material/search:")
-    search = st.Page("Exploratory Data Analysis/search.py", title="Search", icon=":material/search:")
-    search = st.Page("tools/search.py", title="Search", icon=":material/search:")
-    search = st.Page("tools/search.py", title="Search", icon=":material/search:")
-    search = st.Page("tools/search.py", title="Search", icon=":material/search:")
-    search = st.Page("tools/search.py", title="Search", icon=":material/search:")
-    
+    specexp = st.Page("Exploratory Data Analysis/8_Specific_Exploration_of_Data.py", title="Specific Exploration of Data", icon=":material/search:")
+    genexp = st.Page("Exploratory Data Analysis/9_General_Exploration_of_Data.py", title="General Exploration of Data", icon=":material/search:")
+    inf = st.Page("Exploratory Data Analysis/10_Inferential_Visualisations.py", title="Inferential Visualisations", icon=":material/search:")
+    genvis = st.Page("Exploratory Data Analysis/11_General_Visualisations.py", title="General Visualisations", icon=":material/search:")
 
-    
+    ml = st.Page("Machine Learning Models/12_Comparison_of_Classifier_Models.py", title="Comparison of ML Classifier Models", icon=":material/search:")
+    hyper = st.Page("Machine Learning Models/13_Optimisation_of_Various_Hyperparameters.py", title="Hyperparameter Finetuning and Optimisation Techniques", icon=":material/search:")
+
+    if st.session_state.logged_in:
+        pg = st.navigation(
+            {
+                "About this Project": [intro],
+                "UI Personalisation and Color Theory": [changetheme, colorpalette],
+                "Data ETL Pipeline": [dataprep, dataqual, featureeng],
+                "Data EDA Pipeline": [specexp, genexp, inf, genvis],
+                "Machine Learning and Hyperparameter Optimisation": [ml, hyper],
+            }
+        )
+    else:
+        pg = st.navigation([login_page])
         
     
     st.switch_page("pages/UI Personalization/3_Change_Theme.py")  # Redirect after login
