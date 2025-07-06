@@ -226,7 +226,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, classification_report
 
-xdata = pd.read_csv("US_Accidents.csv", nrows=min(1000, sum(1 for _ in open("US_Accidents.csv")) - 1))
+xdata = pd.read_csv("US_Norm.csv")
 
 # Load your dataset
 data = xdata.drop(["ID","Source"],axis=1)
@@ -373,8 +373,7 @@ add_vertical_space(3)
 
 if st.button("SHOW MODELS' COMPARISON REPORT"):
     add_vertical_space(3)
-    data = pd.read_csv("US_Accidents.csv", nrows=min(1000, sum(1 for _ in open("US_Accidents.csv")) - 1))
-
+    data = pd.read_csv("US_Norm.csv")
     data = data.drop(["Unnamed: 0","ID","Source","Description","Street"],axis=1)
     build_model(data)
 
