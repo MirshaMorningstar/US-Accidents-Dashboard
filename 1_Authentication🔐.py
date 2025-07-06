@@ -1,67 +1,55 @@
-# streamlit_app.py (Main Launcher File)
+# authentication.py (Entry point)
 import streamlit as st
 import streamlit_authenticator as stauth
 import pickle
 from pathlib import Path
-import os
+from st_pages import Page, navigation
 
-# ----------------- AUTH CONFIG ------------------
-# Setup login credentials
+# -------------- AUTH CONFIG -------------------
 names = ["Mirsha Morningstar", "Rameez Akther", "Chandru", "Mekesh"]
 usernames = ["Mirsha Morningstar", "Rameez", "Chandru", "Mekesh"]
 
-# Load hashed passwords from file
-file_path = os.path.join(os.path.dirname(__file__), "..", "hashed_pw.pkl")
+# Load hashed passwords
+file_path = Path(__file__).parent / "hashed_pw.pkl"
 with file_path.open("rb") as file:
     hashed_passwords = pickle.load(file)
 
-# Configure authenticator
+# Set collapsed sidebar
+st.set_page_config(initial_sidebar_state="collapsed")
+
+# Landing welcome text
+placeholder1 = st.empty()
+placeholder2 = st.empty()
+placeholder1.title("💥🚗💣 US Accidents Dashboard")
+placeholder2.markdown(
+    """Hello There !!! 👋 A Warm Welcome to our Application Dashboard.
+    This interactive Streamlit + Plotly dashboard uncovers deep patterns, insights, 
+    and relationships from the US Accidents dataset.
+    
+    Login below to explore the application.
+    """
+)
+
+# Authenticator setup
 authenticator = stauth.Authenticate(
     names, usernames, hashed_passwords,
     "US Accidents Dashboard", "abcdef",
     cookie_expiry_days=1
 )
 
-# Login UI
 name, authentication_status, username = authenticator.login("Login your credentials", "main")
 
-# ----------------- PAGE NAVIGATION ------------------
-# Define your pages using st.Page API
-from st_pages import Page, show_pages, add_page_title
+# -------------- LOGIN HANDLING -------------------
 
 if authentication_status is False:
-    st.error("The provided Username or Password is incorrect !!!")
+    st.error("The provided Username or Password is incorrect ❌")
+
 elif authentication_status is None:
-    st.warning("Kindly enter your Username and Password")
+    st.warning("Kindly enter your Username and Password 🔐")
+
 elif authentication_status:
     st.session_state["logged_in"] = True
-
-    # Optional: Hide login content once authenticated
-    st.empty()
-
-    # Define pages with grouped sections for maximum clarity
-    show_pages([
-        # ----- 🔖 Introduction -----
-        Page("pages/0_About_This_Project.py", "📌 About This Project"),
-
-        # ----- 🎨 UI Personalization -----
-        Page("pages/2_Change_Theme.py", "🎨 Change Theme"),
-        Page("pages/3_Color_Palette_Picker.py", "🌈 Color Palette Picker"),
-
-        # ----- 🧪 Data Pipeline -----
-        Page("pages/4_Data_Preprocessing_and_Preparation.py", "🧹 Data Preprocessing & Preparation"),
-        Page("pages/5_Visualisation_of_Data_Quality.py", "✅ Data Quality Visualisation"),
-        Page("pages/6_Feature_Engineering_and_Data_Correlation.py", "🧠 Feature Engineering & Correlation"),
-
-        # ----- 🔍 Exploratory Data Analysis -----
-        Page("pages/7_Specific_Exploration_of_Data.py", "🔬 Specific Data Exploration"),
-        Page("pages/8_General_Exploration_of_Data.py", "📊 General Data Exploration"),
-        Page("pages/9_Inferential_Visualisations.py", "📐 Inferential Visualisations"),
-        Page("pages/10_General_Visualisations.py", "📈 General Visualisations"),
-
-        # ----- 🤖 Machine Learning Models -----
-        Page("pages/11_Comparison_of_Classifier_Models.py", "📝 Classifier Model Comparison"),
-        Page("pages/12_Optimisation_of_Various_Hyperparameters.py", "⚙️ Hyperparameter Optimisation")
-    ])
-
-    add_page_title()  # Adds current page title to top
+    placeholder1.empty()
+    placeholder2.empty()
+    st.success(f"Welcome, {name} ✅")
+    st.switch_page("pages/UI Personalization/3_Change_Theme.py")  # Redirect after login
