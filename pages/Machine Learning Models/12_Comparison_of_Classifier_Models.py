@@ -82,7 +82,7 @@ if st.button('Press to use our Example "US Accidents Dataset"...'):
     st.session_state["example_data_loaded"] = True
     st.session_state["predicted_clicked"] = False
     st.session_state["show_model_report"] = False
-    st.experimental_rerun()
+    st.rerun()
 
 if st.session_state["example_data_loaded"]:
     data = xdata.drop(["ID", "Source"], axis=1)
