@@ -3,7 +3,6 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import pickle
 from pathlib import Path
-from st_pages import Page, navigation
 
 # -------------- AUTH CONFIG -------------------
 names = ["Mirsha Morningstar", "Rameez Akther", "Chandru", "Mekesh"]
