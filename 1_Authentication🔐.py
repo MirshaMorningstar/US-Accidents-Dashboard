@@ -55,7 +55,6 @@ elif authentication_status: # successfully logged in
     
     
     # --- Show the sidebar menu after login ---
-    auth = st.Page("1_Authentication🔐.py", title="Login for Application Access", icon=":material/search:")
     intro = st.Page("pages/Introduction/2_About_This_Project.py", title="About this Application", icon=":material/search:")
     
     changetheme = st.Page("UI Personalization/3_Change_Theme.py", title="Change Application Theme", icon=":material/search:")
