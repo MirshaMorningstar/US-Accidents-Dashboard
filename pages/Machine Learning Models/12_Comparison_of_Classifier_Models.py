@@ -50,7 +50,7 @@ add_vertical_space(2)
 
 # set session state variables to avoid infinite reload
 if "predicted_clicked" not in st.session_state:
-  st.session_state["predict_clicked"] = False
+  st.session_state["predicted_clicked"] = False
 if "show_model_report" not in st.session_state:
   st.session_state["show_model_report"] = False
 #---------------------------------#
@@ -363,7 +363,7 @@ if st.button('Press to use our Example "US Accidents Dataset"...'):
   with c2:
       if not st.session_state["predicted_clicked"]:
         if st.button("Predict !!!"):
-          st.session_state["predict_clicked"] = True
+          st.session_state["predicted_clicked"] = True
 
       if st.session_state["predicted_clicked"]:
           print("I am inside")
