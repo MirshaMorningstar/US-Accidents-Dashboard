@@ -356,6 +356,9 @@ if st.button('Press to use our Example "US Accidents Dataset"...'):
           
   with c2:
       if st.button("Predict !!!"):
+        st.session_state.predict_clicked = True
+
+      if st.session_state.get("predict_clicked", False):
           new_data = pd.DataFrame(new_data)
           # Ensure the new data has the same preprocessing as the training data
           prediction = pipeline.predict(new_data)
@@ -368,6 +371,9 @@ if st.button('Press to use our Example "US Accidents Dataset"...'):
   add_vertical_space(3)
   
   if st.button("SHOW MODELS' COMPARISON REPORT"):
+    st.session_state.show_model_report = True
+    
+  if st.session_state.get("show_model_report", False):
       add_vertical_space(3)
       data = pd.read_csv("US_Norm.csv")
       data = data.drop(["Unnamed: 0","ID","Source","Description","Street"],axis=1)
