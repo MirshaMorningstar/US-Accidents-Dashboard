@@ -226,7 +226,7 @@ if st.session_state["example_data_loaded"]:
                 ax.set_ylim(0, 1 if metric != 'Time Taken' else None)
                 plt.xticks(rotation=90)
                 st.pyplot(fig)
-                st.markdown(imagedownload(plt, f"{metric}.pdf"), unsafe_allow_html=True)
+                st.markdown(imagedownload(plt, f"{metric.replace(' ', '_')}.pdf"), unsafe_allow_html=True)
 
         try:
             data = pd.read_csv("US_Norm.csv")
