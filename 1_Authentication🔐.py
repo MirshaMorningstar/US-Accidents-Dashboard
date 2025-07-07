@@ -57,8 +57,8 @@ authenticator = stauth.Authenticate(
 
 DEBUG = True # flag for development and testing purposes only, remove on production
 
-if DEBUG and ("logged_in" not in st.session_state or not st.session_state.logged_in):
-    st.warning("Use **Username**: `Mirsha Morningstar` and **Password**: `AKM69`")
+if DEBUG:
+    st.markdown("""##### Use **Username**: `Mirsha Morningstar` and **Password**: `AKM69`""")
 
 
 name, authentication_status, username = authenticator.login("Login your credentials", "main")
