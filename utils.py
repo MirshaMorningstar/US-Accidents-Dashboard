@@ -154,12 +154,12 @@ def print_praise():
         '"I\'m sorry, what was that? Ah yes, great app. I use it every *night*. Five *stars*!"\n\n-- Vincent van Vogue',
         '"We\'ve all been waiting years for an app to make a *big splash* like this, and now it\'s finally here!\n[Can you hand me that towel please?]"\n\n-- David Hockknee',
         '"It makes such a great *impression* on you, doesn\'t it? I know where I\'ll be getting my palette for painting the next *sunrise*!"\n\n-- Cloud Moanet',
-        '"Maybe some other time... [Can I get a gin and tonic please?]"\n\n-- Edward Jumper',
+        '"Maybe some other time... [Can I get a gin and tonic please?]"\n\n-- Edward Jumper'
     ]
 
-    title = "[imaginary] **Praise for Sophisticated Palette**\n\n"
-    # random_index = np.random.randint(len(praise_quotes))
-    weights = np.array([2, 3.5, 3, 3, 3, 1])
-    weights = weights/np.sum(weights)
-
-    return title + np.random.choice(praise_quotes, p=weights)
+        title = "[imaginary] **Praise for Sophisticated Palette**\n\n"
+        # random_index = np.random.randint(len(praise_quotes))
+        weights = np.array([2, 3.5, 3, 3, 3, 1])
+        weights = weights/np.sum(weights)
+    
+        return title + np.random.choice(praise_quotes, p=weights)
