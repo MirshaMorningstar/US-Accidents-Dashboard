@@ -147,9 +147,8 @@ def plot_hsv_3d(df):
         st.plotly_chart(fig)
 
 def print_praise():
-    """Yes, I'm that vain and superficial! 🙄 """
-
-    praise_quotes = [
+       praise_quotes = [
+           
         '"When I stumbled upon this app, it was like I found a *pearl* among the oysetrs. Absolutely stunning! "\n\n-- Johannes Merveer',
         '"I wish *Mona* was alive to see this masterpiece! I\'m sure she would have *smiled* at it..."\n\n-- Leonarda va Dinci',
         '"I\'m sorry, what was that? Ah yes, great app. I use it every *night*. Five *stars*!"\n\n-- Vincent van Vogue',
