@@ -62,13 +62,13 @@ c1, c2 = st.columns(2)
 
 with c1:
     st.markdown("**🧠 Clear Understanding**")
-    st.info("Teal promotes clarity and trust; ghost white aids sidebar navigation.")
+    st.info("Teal is a calming yet assertive color that promotes clear communication and understanding. Light gray provides a neutral and balanced background, enhancing readability and ensuring that content stands out effectively. Ghost white offers a subtle distinction in the sidebar, helping users navigate through sections with clarity.")
     if st.button("Use Clear Light Theme"):
         modify("#008080", '#f0f0f0', '#f8f8ff')
 
 with c2:
     st.markdown("**🎯 Compelling Appeal**")
-    st.info("Tomato red grabs attention; beige sidebar improves navigation.")
+    st.info("The vibrant tomato red draws attention and creates a sense of urgency or excitement, making it compelling for users to engage with important elements. Alice blue provides a clean and soothing background, ensuring that the content remains easy to read and visually appealing. Beige offers a subtle contrast in the sidebar, aiding in navigation without overshadowing the main content.")
     if st.button("Use Compelling Light Theme"):
         modify("#ff6347", '#f0f8ff', '#f5f5dc')
 
@@ -77,13 +77,13 @@ c1, c2 = st.columns(2)
 
 with c1:
     st.markdown("**📋 Professional Standard**")
-    st.info("Dark gray conveys seriousness, white enhances readability.")
+    st.info("Dark gray exudes professionalism and sophistication while maintaining readability and visual hierarchy. White serves as a clean and timeless background, emphasizing content and ensuring a professional aesthetic. Light gray in the sidebar provides a subtle contrast and organization without detracting from the main focus.")
     if st.button("Use Professional Light Theme"):
         modify("#333333", '#ffffff', '#f0f0f0')
 
 with c2:
     st.markdown("**🌈 Visually Attractive**")
-    st.info("Orange energizes; peachy background welcomes users.")
+    st.info("Vivid orange is a bold and energetic color that immediately captures attention and stimulates interest. Light peach provides a soft and inviting background, creating a warm and welcoming atmosphere while ensuring readability. Khaki in the sidebar offers a complementary contrast, enhancing visual appeal and encouraging exploration of the interface.")
     if st.button("Use Attractive Light Theme"):
         modify("#ffaa00", '#f9f6f2', '#f0e68c')
 
@@ -96,13 +96,13 @@ c1, c2 = st.columns(2)
 
 with c1:
     st.markdown("**🧠 Clear Understanding**")
-    st.info("Turquoise text on slate gray improves focus.")
+    st.info("Turquoise promotes clear communication and understanding, ensuring that important information stands out effectively. Dark slate gray creates a visually appealing contrast while maintaining a professional appearance. Gunmetal in the sidebar offers a subtle distinction, aiding in navigation and organization without overwhelming the user.")
     if st.button("Use Clear Dark Theme"):
         modify("#40E0D0", "#030637", "#3C0753", text="#EEEEEE")
 
 with c2:
     st.markdown("**🎯 Compelling Appeal**")
-    st.info("Orange-red pops out against dark surfaces.")
+    st.info("The vibrant orange-red stands out against the dark background, immediately drawing the user's attention. The dark gray background provides a sleek and modern appearance while enhancing readability. The charcoal sidebar offers a subtle contrast, making it easy to navigate through sections without distracting from the main content.")
     if st.button("Use Compelling Dark Theme"):
         modify("#FF204E", "#222831", "#31363F", text="#F5EDED")
 
@@ -111,13 +111,13 @@ c1, c2 = st.columns(2)
 
 with c1:
     st.markdown("**📋 Professional Standard**")
-    st.info("Light gray and black create a timeless layout.")
+    st.info("Light gray exudes professionalism and sophistication while ensuring readability and visual hierarchy. Black provides a classic and timeless background, emphasizing content and maintaining a professional aesthetic. Dark slate gray in the sidebar offers a subtle contrast and organization without detracting from the main focus.")
     if st.button("Use Professional Dark Theme"):
         modify("#CCCCCC", "#1a1a1a", "#2a2a2a", text="#EEEEEE")
 
 with c2:
     st.markdown("**🌈 Visually Attractive**")
-    st.info("Bold yellow over black attracts instant focus.")
+    st.info("Vivid yellow is bold and eye-catching, instantly capturing attention and creating visual interest. Midnight black offers a dramatic and striking background, providing a sleek and modern appearance. Dark charcoal in the sidebar complements the primary color, enhancing visual appeal and encouraging exploration of the interface.")
     if st.button("Use Attractive Dark Theme"):
         modify("#FFD700", "#121212", "#222222", text="#F5EDED")
 
@@ -130,13 +130,13 @@ c1, c2 = st.columns(2)
 
 with c1:
     st.markdown("**⚡ Electric Colors**")
-    st.info("Vibrant green and navy blue promote alertness.")
+    st.info("Electric green is a vibrant and attention-grabbing color that stimulates excitement and engagement. Black provides a dramatic and high-contrast background, enhancing the visibility of content and creating a sense of urgency. Navy blue in the sidebar offers a complementary contrast, aiding navigation without overwhelming the user.")
     if st.button("Use Electric Theme"):
         modify("#39FF14", "#0f0f0f", "#000080", text="#F5EDED")
 
 with c2:
     st.markdown("**💡 Radiative Glow**")
-    st.info("Yellow foregrounds and white backgrounds amplify clarity.")
+    st.info("Radiant yellow promotes clarity and comprehension, ensuring that important information stands out effectively. White offers a clean and minimalist background, enhancing readability and creating a sense of openness. Salmon in the sidebar provides a subtle yet warm contrast, aiding navigation and organization without detracting from the main focus.")
     if st.button("Use Radiative Glow Theme"):
         modify("#ffcc00", "#ffffff", "#E3FEF7", text="brown")
 
@@ -145,13 +145,13 @@ c1, c2 = st.columns(2)
 
 with c1:
     st.markdown("**📦 Classic Neutrals**")
-    st.info("Minimalist layout enhances comprehension.")
+    st.info("Dark gray exudes professionalism and sophistication while maintaining readability and visual hierarchy. Light gray provides a neutral and balanced background, ensuring content stands out effectively. Medium gray in the sidebar offers a subtle contrast and organization, enhancing navigation without overshadowing the main content.")
     if st.button("Use Classic Neutral Theme"):
         modify("#333333", "#f5f5f5", "#808080")
 
 with c2:
     st.markdown("**🎨 Vivid Contrast**")
-    st.info("Red, yellow, and blue combo boosts energy and focus.")
+    st.info("Vivid red is bold and attention-grabbing, instantly capturing attention and creating visual interest. Vivid yellow offers a striking and high-contrast background, enhancing visibility and drawing the user's focus. Vivid blue in the sidebar complements the primary color, creating a visually appealing contrast and encouraging exploration of the interface.")
     if st.button("Use Vivid Contrast Theme"):
         modify("#ff0000", "#ffff00", "#8576FF")
 
