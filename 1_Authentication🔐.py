@@ -55,6 +55,12 @@ authenticator = stauth.Authenticate(
     cookie_expiry_days=1
 )
 
+DEBUG = True # flag for development and testing purposes only, remove on production
+
+if DEBUG:
+    st.warning("Use **Username**: `Mirsha Morningstar` and **Password**: `AKM69`")
+
+
 name, authentication_status, username = authenticator.login("Login your credentials", "main")
 
 # -------------- LOGIN HANDLING -------------------
@@ -64,7 +70,7 @@ if authentication_status is False:
     st.session_state.logged_in = False
 
 elif authentication_status is None:
-    st.warning("Kindly enter Username: Mirsha Morningstar and Password: AKM69 🔐")
+    st.warning("Kindly enter Username: Mirsha Morningstar and Password: AKM69")
 
 elif authentication_status:  # successfully logged in
     st.session_state.logged_in = True
