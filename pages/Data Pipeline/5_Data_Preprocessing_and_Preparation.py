@@ -19,7 +19,7 @@ warnings.filterwarnings('ignore')
 
 # ------------------- PAGE CONFIG -----------------------
 st.set_page_config(
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
     page_title="Data Preprocessing and Preparation for Exploration",
     page_icon="analysis.png",
     layout="wide",
