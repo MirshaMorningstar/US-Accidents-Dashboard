@@ -57,10 +57,6 @@ authenticator = stauth.Authenticate(
 
 DEBUG = True # flag for development and testing purposes only, remove on production
 
-if DEBUG:
-    st.markdown("""##### Use **Username**: `Mirsha Morningstar` and **Password**: `AKM69`""")
-
-
 name, authentication_status, username = authenticator.login("Login your credentials", "main")
 
 # -------------- LOGIN HANDLING -------------------
@@ -68,9 +64,15 @@ name, authentication_status, username = authenticator.login("Login your credenti
 if authentication_status is False:
     st.error("The provided Username or Password is incorrect ❌")
     st.session_state.logged_in = False
+    if DEBUG:
+        st.markdown("""##### Use **Username**: `Mirsha Morningstar` and **Password**: `AKM69`""")
+
 
 elif authentication_status is None:
     st.warning("Kindly enter Username: Mirsha Morningstar and Password: AKM69")
+    if DEBUG:
+        st.markdown("""##### Use **Username**: `Mirsha Morningstar` and **Password**: `AKM69`""")
+
 
 elif authentication_status:  # successfully logged in
     st.session_state.logged_in = True
