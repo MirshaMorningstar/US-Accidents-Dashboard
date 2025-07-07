@@ -19,7 +19,7 @@ st.set_page_config(initial_sidebar_state="collapsed")
 # Landing welcome text
 placeholder1 = st.empty()
 placeholder2 = st.empty()
-placeholder1.title("💥🚗💣 Welcome to the US Accidents Analysis & Prediction Platform")
+placeholder1.title("💥🚗💣 Welcome to the US Accidents Analysis & Machine Learning Prediction Platform")
 placeholder2.markdown(
     """
     #### 👋 Hello and Welcome!
