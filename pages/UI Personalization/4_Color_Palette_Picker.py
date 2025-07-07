@@ -45,10 +45,7 @@ from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 
-
 warnings.filterwarnings('ignore')
-
-
 
 import streamlit as st
 
@@ -62,7 +59,7 @@ gallery_files = glob(os.path.join(".", "images", "*"))
 gallery_dict = {image_path.split("/")[-1].split(".")[-2].replace("-", " "): image_path
     for image_path in gallery_files}
 
-st.set_page_config(initial_sidebar_state="collapsed",page_title= " Change Application Themes ",
+st.set_page_config(initial_sidebar_state="expanded",page_title= " Change Application Themes ",
         menu_items={
          'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
          'Report a bug': "mailto:a.k.mirsha9@gmail.com",
@@ -138,14 +135,6 @@ with upload_tab:
 
 with url_tab:
     url_text = st.empty()
-    
-    # FIXME: the button is a bit buggy, but it's worth fixing this later
-
-    # url_reset = st.button("Clear URL", key="url_reset")
-    # if url_reset and "image_url" in st.session_state:
-    #     st.session_state["image_url"] = ""
-    #     st.write(st.session_state["image_url"])
-
     url = url_text.text_input("Image URL", key="image_url")
     
     if url!="":
@@ -175,10 +164,6 @@ with st.expander("🖼  Artwork", expanded=True):
 if click or toggle:
     
     df_rgb = get_df_rgb(img, sample_size)
-
-    # (optional for later)
-    # plot_rgb_3d(df_rgb) 
-    # plot_hsv_3d(df_rgb) 
 
     # calculate the RGB palette and cache it to session_state
     st.session_state["palette_rgb"] = get_palette(df_rgb, model_name, palette_size, sort_func=sort_func)
@@ -255,7 +240,7 @@ if click or toggle:
 
        
 else:
-    st.info("👈  Click on 'Find Palette' ot turn on 'Toggle Update' to see the color palette.")
+    st.info("👈  Click on 'Find Palette' to turn on 'Toggle Update' to see the color palette.")
 
 st.sidebar.success(print_praise())   
 st.sidebar.write("---\n")
