@@ -50,9 +50,8 @@ warnings.filterwarnings('ignore')
 import streamlit as st
 
 sys.path.insert(0, ".")
-from utils import show_palette, model_dict, get_palette, \
-    sort_func_dict, store_palette, display_matplotlib_code, display_plotly_code,\
-     get_df_rgb, enhancement_range, plot_rgb_3d, plot_hsv_3d, print_praise
+
+from utils import show_palette, model_dict, get_palette, sort_func_dict, store_palette, display_matplotlib_code, display_plotly_code, get_df_rgb, enhancement_range, plot_rgb_3d, plot_hsv_3d, print_praise
 
 
 gallery_files = glob(os.path.join(".", "images", "*"))
@@ -86,22 +85,31 @@ sample_size = int(st.sidebar.number_input("sample size", min_value=5, max_value=
 # Image Enhancement
 enhancement_categories = enhancement_range.keys()
 enh_expander = st.sidebar.expander("Image Enhancements", expanded=False)
+
 with enh_expander:
-    
     if st.button("reset"):
         for cat in enhancement_categories:
             if f"{cat}_enhancement" in st.session_state:
                 st.session_state[f"{cat}_enhancement"] = 1.0
-enhancement_factor_dict = {
-    cat: enh_expander.slider(f"{cat} Enhancement", 
-                            value=1., 
-                            min_value=enhancement_range[cat][0], 
-                            max_value=enhancement_range[cat][1], 
-                            step=enhancement_range[cat][2],
-                            key=f"{cat}_enhancement")
-    for cat in enhancement_categories
-}
-enh_expander.info("**Try the following**\n\nColor Enhancements = 2.6\n\nContrast Enhancements = 1.1\n\nBrightness Enhancements = 1.1")
+
+    enhancement_factor_dict = {
+        cat: enh_expander.slider(
+            f"{cat} Enhancement",
+            value=1.0,
+            min_value=enhancement_range[cat][0],
+            max_value=enhancement_range[cat][1],
+            step=enhancement_range[cat][2],
+            key=f"{cat}_enhancement"
+        )
+        for cat in enhancement_categories
+    }
+
+    enh_expander.info(
+        "**Try the following**\n\n"
+        "Color Enhancements = 2.6\n\n"
+        "Contrast Enhancements = 1.1\n\n"
+        "Brightness Enhancements = 1.1"
+    )
 
 # Clustering Model 
 model_name = st.sidebar.selectbox("machine learning model", model_dict.keys(), help="Machine Learning model to use for clustering pixels and colors together.")
