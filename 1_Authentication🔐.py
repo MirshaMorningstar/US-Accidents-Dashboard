@@ -19,13 +19,32 @@ st.set_page_config(initial_sidebar_state="collapsed")
 # Landing welcome text
 placeholder1 = st.empty()
 placeholder2 = st.empty()
-placeholder1.title("💥🚗💣 US Accidents Dashboard")
+placeholder1.title("💥🚗💣 Welcome to the US Accidents Analysis & Prediction Platform")
 placeholder2.markdown(
-    """Hello There !!! 👋 A Warm Welcome to our Application Dashboard.
-    This interactive Streamlit + Plotly dashboard uncovers deep patterns, insights, 
-    and relationships from the US Accidents dataset.
-    
-    Login below to explore the application.
+    """
+    #### 👋 Hello and Welcome!
+
+    This interactive, multi-page dashboard is built to **explore, visualize, and predict accident severity** across the United States using real-world crash data. It combines modern UI aesthetics with robust data science pipelines to deliver:
+
+    - 🔎 **Comprehensive Data Exploration**  
+    - 🛠️ **Feature Engineering and Correlation Insights**  
+    - 📊 **Dynamic Visualizations (EDA + Inferential)**  
+    - 🧠 **ML Model Comparison & Accuracy Benchmarking**  
+    - 🎯 **Hyperparameter Tuning & Prediction Interface**
+
+    Whether you're a data enthusiast, domain expert, or a decision-maker, this tool gives you full control to **analyze trends, model risks, and optimize safety strategies**.
+
+    ---
+
+    ### 🚦 Why This Project Stands Out
+
+    * Fully modular **ETL + EDA + ML pipelines**  
+    * Real-time **interactive UI with theme customization**  
+    * Plug-and-play support for **custom CSV uploads**  
+    * Supports 25+ ML models using **LazyPredict & GridSearchCV**  
+    * **Session-managed prediction flow** without unnecessary reloads  
+
+    ---
     """
 )
 
@@ -45,22 +64,20 @@ if authentication_status is False:
     st.session_state.logged_in = False
 
 elif authentication_status is None:
-    st.warning("Kindly enter your Username and Password 🔐")
+    st.warning("Kindly enter Username: Mirsha Morningstar and Password: AKM69 🔐")
 
-elif authentication_status: # successfully logged in
+elif authentication_status:  # successfully logged in
     st.session_state.logged_in = True
     placeholder1.empty()
     placeholder2.empty()
-    st.success(f"Welcome, {name} ✅")
-    
-    
-    # --- Show the sidebar menu after login ---
+
+    # --- Showing sidebar menu after login ---
     intro = st.Page(
         "pages/Introduction/2_About_This_Project.py",
         title="About this Application",
         icon=":material/info:"
     )
-    
+
     # UI Personalization
     changetheme = st.Page(
         "pages/UI Personalization/3_Change_Theme.py",
@@ -72,7 +89,7 @@ elif authentication_status: # successfully logged in
         title="Color Palette Picker",
         icon=":material/palette:"
     )
-    
+
     # Data Pipeline
     dataprep = st.Page(
         "pages/Data Pipeline/5_Data_Preprocessing_and_Preparation.py",
@@ -89,7 +106,7 @@ elif authentication_status: # successfully logged in
         title="Feature Engineering and Data Correlation Analysis",
         icon=":material/insights:"
     )
-    
+
     # Exploratory Data Analysis
     specexp = st.Page(
         "pages/Exploratory Data Analysis/8_Specific_Exploration_of_Data.py",
@@ -111,7 +128,7 @@ elif authentication_status: # successfully logged in
         title="General Visualisations",
         icon=":material/insert_chart:"
     )
-    
+
     # Machine Learning
     ml = st.Page(
         "pages/Machine Learning Models/12_Comparison_of_Classifier_Models.py",
@@ -123,7 +140,6 @@ elif authentication_status: # successfully logged in
         title="Hyperparameter Finetuning and Optimisation Techniques",
         icon=":material/tune:"
     )
-    
 
     if st.session_state.logged_in:
         pg = st.navigation(
@@ -135,7 +151,6 @@ elif authentication_status: # successfully logged in
                 "Machine Learning and Hyperparameter Optimisation": [ml, hyper],
             }
         )
-           
-    
+
     # Run the selected page
     pg.run()
