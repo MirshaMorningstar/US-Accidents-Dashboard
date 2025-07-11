@@ -14,7 +14,7 @@ import os
 st.set_page_config(
     page_title='Hyperparameter Optimization Window (Classification)',
     layout='wide',
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
     page_icon="image.png",
     menu_items={
         'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
