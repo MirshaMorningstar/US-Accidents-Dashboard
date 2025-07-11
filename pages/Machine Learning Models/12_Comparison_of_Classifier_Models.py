@@ -29,7 +29,7 @@ from sklearn.pipeline import Pipeline
 
 # Page Config
 st.set_page_config(
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
     page_title='The Machine Learning Classification Algorithms Comparison Window',
     layout='wide',
     menu_items={
@@ -181,10 +181,8 @@ if st.session_state["example_data_loaded"]:
     st.markdown("### Click below to view the overall comparison report of 25+ ML models.")
     add_vertical_space(2)
 
-    if not st.session_state["show_model_report"]:
-        if st.button("SHOW MODELS' COMPARISON REPORT"):
-            st.session_state["show_model_report"] = True
-            st.rerun()
+    if st.button("SHOW MODELS' COMPARISON REPORT"):
+        st.session_state["show_model_report"] = True
 
     if st.session_state["show_model_report"]:
         def filedownload(df, filename):
