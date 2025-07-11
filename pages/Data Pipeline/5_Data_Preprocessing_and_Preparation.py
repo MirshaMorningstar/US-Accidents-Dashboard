@@ -45,8 +45,8 @@ if fl is not None:
     df = pd.read_csv(fl, encoding="ISO-8859-1")
     st.success("✅ File Uploaded Successfully!")
 else:
-    df = pd.read_csv("US_Accidents_1000.csv", encoding="ISO-8859-1")
-    st.info("ℹ️ Using sample dataset: `US_Accidents_1000.csv`")
+    df = pd.read_csv("US_Accidents.csv", encoding="ISO-8859-1")
+    st.info("ℹ️ Using sample dataset: `US_Accidents.csv`")
 
 add_vertical_space(3)
 
