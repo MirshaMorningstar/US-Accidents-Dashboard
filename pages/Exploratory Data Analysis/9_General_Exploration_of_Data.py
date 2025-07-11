@@ -7,14 +7,15 @@ from streamlit_pandas_profiling import st_profile_report
 import streamlit.components.v1 as components # important for rendering pandas report inside html
 # Set page configuration
 st.set_page_config(
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
     page_title="The Exploratory Data Analysis Window",
     page_icon="analysis.png",  # Make sure this file exists
     menu_items={
         'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
         'Report a bug': "mailto:a.k.mirsha9@gmail.com",
         'About': "### This is an extremely cool web application built as a part of my Data Science Mini Project on the ' US Accidents Dataset '\n"
-    }
+    },
+    layout="wide"
 )
 
 # Title
@@ -28,10 +29,10 @@ st.markdown('''
 st.text('''
     1. Input Sample Data Frame
     2. Overview and Alerts
-    3. Missing/distinct values, correlation, visual plots of variables
-    4. Interactions between attributes
-    5. Correlation Heatmap and Table
-    6. Missing value matrix and heatmap
+    3. Visual plots of variables
+    4. Descriptive Statistics
+    5. Quantile Statistics
+    6. Missing Values, Imbalance, Constant Labels
     7. Sample of first and last rows
 ''')
 add_vertical_space(2)
