@@ -90,9 +90,6 @@ with c1:
     score_scaled_knn = cross_val_score(knn, minmax_scaled, data['Severity'], cv=2).mean()
     st.write(f"Original: `{score_orig_knn:.4f}` | Normalized: `{score_scaled_knn:.4f}`")
 
-    st.markdown("##### _Observation_:")
-    st.info("Normalization improves the KNN model accuracy because it relies on distance-based calculations, and unscaled features can distort the distance metrics.")
-
     add_vertical_space(1)
 
     st.markdown("#### 🔸 Random Forest (Ensemble Tree-Based Model)")
@@ -100,9 +97,6 @@ with c1:
     score_orig_rf = cross_val_score(rf, data[[attribute]], data['Severity'], cv=2).mean()
     score_scaled_rf = cross_val_score(rf, minmax_scaled, data['Severity'], cv=2).mean()
     st.write(f"Original: `{score_orig_rf:.4f}` | Normalized: `{score_scaled_rf:.4f}`")
-
-    st.markdown("##### _Observation_:")
-    st.info("Random Forest is scale-invariant. Hence, normalization has negligible impact on its performance.")
 
 with c2:
     st.markdown('### 🔸 Standard Normalization')
@@ -130,10 +124,7 @@ with c2:
     score_orig_knn2 = cross_val_score(knn2, data[[attribute2]], data['Severity'], cv=2).mean()
     score_scaled_knn2 = cross_val_score(knn2, std_scaled, data['Severity'], cv=2).mean()
     st.write(f"Original: `{score_orig_knn2:.4f}` | Normalized: `{score_scaled_knn2:.4f}`")
-
-    st.markdown("##### _Observation_:")
-    st.info("Standardization significantly helps KNN by transforming features to comparable scales, avoiding bias from higher magnitude features.")
-
+    
     add_vertical_space(1)
 
     st.markdown("#### 🔸 Random Forest (Ensemble Tree-Based Model)")
@@ -141,9 +132,6 @@ with c2:
     score_orig_rf2 = cross_val_score(rf2, data[[attribute2]], data['Severity'], cv=2).mean()
     score_scaled_rf2 = cross_val_score(rf2, std_scaled, data['Severity'], cv=2).mean()
     st.write(f"Original: `{score_orig_rf2:.4f}` | Normalized: `{score_scaled_rf2:.4f}`")
-
-    st.markdown("##### _Observation_:")
-    st.info("Random Forest remains unaffected by normalization, proving its robustness against scale variance.")
 
 add_vertical_space(4)
 
@@ -197,16 +185,16 @@ def plot_binned_column(data, column_name):
     st.plotly_chart(bar,key=5)
 
 st.subheader("🔢 Binning Options")
-bin_col_name = st.selectbox("Select Numerical Attribute for Binning", numerical_columns, index=9)
+bin_col_name = st.selectbox("Select Numerical Attribute for Binning", numerical_columns, index=6)
 
 if bin_col_name in df.columns:
     labels_input = st.text_input(
         "Enter bin labels (comma-separated):", 
-        value="Very Low,Low,Moderate,High,Very High,Extremely High"
+        value="Very Cold,Cold,Moderate,Warm,Hot"
     )
     value_ranges_input = st.text_input(
         "Enter bin ranges (comma-separated):", 
-        value="0,1000,2500,4000,5500,7000,9000"
+        value="-100,32,50,70,90,200"
     )
 
     labels = [label.strip() for label in labels_input.split(',')]
