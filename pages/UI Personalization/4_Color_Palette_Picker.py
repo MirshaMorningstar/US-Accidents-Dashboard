@@ -72,8 +72,6 @@ st.markdown('''##### :smile: This Window is specifically Synthesized for Extract
 
 add_vertical_space(1)
 
-st.sidebar.markdown("---")
-
 toggle = st.sidebar.checkbox("Toggle Update", value=True, help="Continuously update the pallete with every change in the app.")
 click = st.sidebar.button("Find Palette", disabled=bool(toggle))
 
