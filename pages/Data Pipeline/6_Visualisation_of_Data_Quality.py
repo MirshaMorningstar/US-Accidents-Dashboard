@@ -13,7 +13,7 @@ import numpy as np
 warnings.filterwarnings('ignore')
 
 
-st.set_page_config(initial_sidebar_state="collapsed",page_title= " Data Quality Visualisation ",
+st.set_page_config(initial_sidebar_state="expanded",page_title= " Data Quality Visualisation ",
         menu_items={
          'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
          'Report a bug': "mailto:a.k.mirsha9@gmail.com",
