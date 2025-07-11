@@ -42,7 +42,7 @@ warnings.filterwarnings('ignore')
 
 
 
-st.set_page_config(initial_sidebar_state="expanded",page_title= " Inferential Data Visualisation Window ",
+st.set_page_config(initial_sidebar_state="collapsed",page_title= " Inferential Data Visualisation Window ",
         menu_items={
          'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
          'Report a bug': "mailto:a.k.mirsha9@gmail.com",
