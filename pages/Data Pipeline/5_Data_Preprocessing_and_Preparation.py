@@ -11,6 +11,7 @@ import plotly.figure_factory as ff
 from streamlit_extras.add_vertical_space import add_vertical_space
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_score
 from scipy import stats
 import warnings
