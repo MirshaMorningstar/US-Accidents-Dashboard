@@ -95,8 +95,8 @@ with c2:
 
     add_vertical_space(1)
     st.markdown("**Histogram Comparison:**")
-    fig3 = px.histogram(data[attribute2], title='Original Data', color_discrete_sequence=px.colors.sequential.Blues)
-    fig4 = px.histogram(std_scaled.flatten(), title='Standardized Data', color_discrete_sequence=px.colors.sequential.Blues)
+    fig3 = px.histogram(data[attribute2], title='Original Data', color_discrete_sequence=px.colors.sequential.Agsunset)
+    fig4 = px.histogram(std_scaled.flatten(), title='Standardized Data', color_discrete_sequence=px.colors.sequential.Agsunset)
     st.plotly_chart(fig3, use_container_width=True)
     st.plotly_chart(fig4, use_container_width=True)
 
