@@ -173,7 +173,7 @@ if bin_col_name in df.columns:
     value_ranges = [float(val.strip()) for val in value_ranges_input.split(',')]
 
     if "binning" not in st.session_state:
-        st.session_state["binnning"] = False
+        st.session_state["binning"] = False
         
     if st.button("✅ Perform Binning"):
         st.session_state["binning"] = True
