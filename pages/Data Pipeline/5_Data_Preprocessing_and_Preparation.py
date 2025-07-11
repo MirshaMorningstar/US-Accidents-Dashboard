@@ -65,7 +65,7 @@ c1, c2 = st.columns(2)
 
 with c1:
     st.markdown('### 🔹 Min-Max Normalization')
-    attribute = st.selectbox("Select attribute for Min-Max Normalization:", numerical_columns, index=6)
+    attribute = st.selectbox("Select attribute for Min-Max Normalization:", numerical_columns, index=9)
     scaler = MinMaxScaler()
     minmax_scaled = scaler.fit_transform(data[[attribute]])
 
@@ -106,7 +106,7 @@ with c1:
 
 with c2:
     st.markdown('### 🔸 Standard Normalization')
-    attribute2 = st.selectbox("Select attribute for Standardization:", numerical_columns, index=6)
+    attribute2 = st.selectbox("Select attribute for Standardization:", numerical_columns, index=9)
     std_scaler = StandardScaler()
     std_scaled = std_scaler.fit_transform(data[[attribute2]])
 
