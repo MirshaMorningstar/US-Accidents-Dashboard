@@ -504,7 +504,7 @@ with c3:
 4. **Visual Appeal**:
    - The use of donut charts effectively displays the proportion of True and False values for each amenity, with distinct colors aiding visual interpretation and understanding of the distribution.
 
-Overall, the plot highlights that traffic signals and crossings are the most prevalent amenities in road conditions, underscoring their critical role in managing traffic and ensuring safety. The lower presence of stop signs and traffic calming measures suggests areas for potential improvement in road safety measures.''')
+Overall, the plot highlights that traffic signals and crossings are the most prevalent amenities in road conditions, underscoring their critical role in managing traffic and ensuring safety. Stop Signs and Traffic Calming Mechanisms have greatly resulted in least accidents. This suggests areas for potential improvement in road safety measures inorder to mitigate road accidents.''')
 
 
 
