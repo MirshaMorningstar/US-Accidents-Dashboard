@@ -225,14 +225,14 @@ c1,c2 = st.columns(2)
 
 add_vertical_space(5)
 with c1:
-    # 2. Accident Duration Analysis
-    st.markdown('##### Box Plot of Accident Duration')
-    fig2, ax2 = plt.subplots()
+    st.markdown('##### Box Plot of Accident Duration (Log Scaled)')
     df['Duration'] = (pd.to_datetime(df['End_Time']) - pd.to_datetime(df['Start_Time'])).dt.total_seconds() / 3600
-    sns.boxplot(x='Duration', data=df, ax=ax2)
-    ax2.set_title('Box Plot of Accident Duration')
-    ax2.set_xlabel('Duration (Hours)')
-    st.pyplot(fig2,use_container_width=True)
+
+    fig, ax = plt.subplots()
+    sns.boxplot(x=np.log1p(df['Duration']), ax=ax)  # log1p handles zero values safely
+    ax.set_title('Box Plot of Log Accident Duration')
+    ax.set_xlabel('Log(Duration in Hours)')
+    st.pyplot(fig, use_container_width=True)
 
 with c2:
     # 3. Scatter Plot of Pressure vs. Humidity
