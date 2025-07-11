@@ -23,6 +23,9 @@ st.set_page_config(
     }
 )
 
+if 'example' not in st.session_state:
+    st.session_state['example'] = False
+
 st.title("⚙️ Machine Learning Hyperparameter Optimization (Classification Edition)")
 add_vertical_space(2)
 
@@ -150,14 +153,13 @@ if uploaded_file is not None:
 else:
     st.info("No dataset uploaded.")
     if st.button('Use Example Dataset'):
-        # Adjust this path for deployment on Streamlit Cloud
-        try:
-            example_path = os.path.join(os.path.dirname(__file__), '..', 'US_Norm.csv')
-            df = pd.read_csv(example_path)
-        except:
-            df = pd.read_csv("US_Norm.csv")  # fallback if root file exists
-        st.write(df.head())
-    
-        st.subheader("🔍 Grid Search CV on RandomForest Classifier Model Performance")    
-        with st.spinner("Training the GridSearch CV Hyperparameter Optimisation on RandomForest Classifier Machine Learning Model... this may take a few minutes..."):
-            build_model(df)
+        st.session_state['example'] = True
+        
+if st.session_state['example']:
+    # example_path = os.path.join(os.path.dirname(__file__), '..', 'US_Norm.csv')
+    df = pd.read_csv('US_Norm.csv')
+    st.write(df.head())
+
+    st.subheader("🔍 Grid Search CV on RandomForest Classifier Model Performance")    
+    with st.spinner("Training the GridSearch CV Hyperparameter Optimisation on RandomForest Classifier Machine Learning Model... this may take a few minutes..."):
+        build_model(df)
