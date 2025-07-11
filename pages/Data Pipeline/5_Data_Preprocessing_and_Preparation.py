@@ -72,8 +72,8 @@ with c1:
     st.markdown("**Histogram Comparison:**")
     fig1 = px.histogram(data[attribute], title='Original Data', color_discrete_sequence=px.colors.sequential.Agsunset)
     fig2 = px.histogram(minmax_scaled.flatten(), title='Min-Max Normalized', color_discrete_sequence=px.colors.sequential.Agsunset)
-    st.plotly_chart(fig1, use_container_width=True)
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig1, use_container_width=True,key=1)
+    st.plotly_chart(fig2, use_container_width=True,key=2)
 
     add_vertical_space(1)
     st.markdown("**Shapiro-Wilk Test (Normalized Data):**")
@@ -97,8 +97,8 @@ with c2:
     st.markdown("**Histogram Comparison:**")
     fig3 = px.histogram(data[attribute2], title='Original Data', color_discrete_sequence=px.colors.sequential.Agsunset)
     fig4 = px.histogram(std_scaled.flatten(), title='Standardized Data', color_discrete_sequence=px.colors.sequential.Agsunset)
-    st.plotly_chart(fig3, use_container_width=True)
-    st.plotly_chart(fig4, use_container_width=True)
+    st.plotly_chart(fig3, use_container_width=True,key=3)
+    st.plotly_chart(fig4, use_container_width=True,key=4)
 
     add_vertical_space(1)
     st.markdown("**Shapiro-Wilk Test (Standardized Data):**")
@@ -160,7 +160,7 @@ def plot_binned_column(data, column_name):
         labels={'x': column_name, 'y': 'Count'},
         color_discrete_sequence=px.colors.sequential.Magenta
     )
-    st.plotly_chart(bar)
+    st.plotly_chart(bar,key=5)
 
 st.subheader("🔢 Binning Options")
 bin_col_name = st.selectbox("Select Numerical Attribute for Binning", numerical_columns, index=6)
