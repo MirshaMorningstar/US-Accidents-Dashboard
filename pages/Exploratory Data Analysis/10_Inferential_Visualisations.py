@@ -42,7 +42,7 @@ warnings.filterwarnings('ignore')
 
 
 
-st.set_page_config(initial_sidebar_state="collapsed",page_title= " Inferential Data Visualisation Window ",
+st.set_page_config(initial_sidebar_state="expanded",page_title= " Inferential Data Visualisation Window ",
         menu_items={
          'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
          'Report a bug': "mailto:a.k.mirsha9@gmail.com",
@@ -513,7 +513,4 @@ with c3:
 Overall, the plot highlights that traffic signals and crossings are the most prevalent amenities in road conditions, underscoring their critical role in managing traffic and ensuring safety. The lower presence of stop signs and traffic calming measures suggests areas for potential improvement in road safety measures.''')
 
 
-from streamlit_extras.bottom_container import bottom
-with bottom():
-    st.markdown("#### Congratulations, you have reached the last page of this Web Application !!!")
-    st.write("**Thank You So Much** for Allocating Time for getting yourself immersed in this Data Exploration and Visualisation Dashboard....")
+
