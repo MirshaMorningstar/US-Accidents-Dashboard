@@ -15,13 +15,13 @@ from pandas.api.types import (
     is_object_dtype,
 )
 
-st.set_page_config(initial_sidebar_state="collapsed", page_title="The Data Frames Explorer Window",
+st.set_page_config(initial_sidebar_state="expanded", page_title="The Data Frames Explorer Window",
         menu_items={
          'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
          'Report a bug': "mailto:a.k.mirsha9@gmail.com",
          'About': "### This is an extremely cool web application built as a part of my Data Science Mini Project on the ' US Accidents Dataset '\n"
      },
-     page_icon="exploratory-analysis (1).png")
+     page_icon="exploratory-analysis (1).png",layout="wide")
 
 st.title("Welcome to the Data Frame Explorer Window")
 
