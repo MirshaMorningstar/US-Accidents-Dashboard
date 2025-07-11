@@ -45,8 +45,8 @@ if fl is not None:
     df = pd.read_csv(fl, encoding="ISO-8859-1")
     st.success("✅ File Uploaded Successfully!")
 else:
-    df = pd.read_csv("US_Accidents.csv", encoding="ISO-8859-1")
-    st.info("ℹ️ Using sample dataset: `US_Accidents.csv`")
+    df = pd.read_csv("US_Accidents_1000.csv", encoding="ISO-8859-1")
+    st.info("ℹ️ Using sample dataset: `US_Accidents_1000.csv`")
 
 add_vertical_space(3)
 
@@ -197,11 +197,17 @@ def plot_binned_column(data, column_name):
     st.plotly_chart(bar,key=5)
 
 st.subheader("🔢 Binning Options")
-bin_col_name = st.selectbox("Select Numerical Attribute for Binning", numerical_columns, index=6)
+bin_col_name = st.selectbox("Select Numerical Attribute for Binning", numerical_columns, index=9)
 
 if bin_col_name in df.columns:
-    labels_input = st.text_input("Enter bin labels (comma-separated):", value="Very Cold,Cold,Moderate,Warm,Hot")
-    value_ranges_input = st.text_input("Enter bin ranges (comma-separated):", value="-100,32,50,70,90,200")
+    labels_input = st.text_input(
+        "Enter bin labels (comma-separated):", 
+        value="Very Low,Low,Moderate,High,Very High,Extremely High"
+    )
+    value_ranges_input = st.text_input(
+        "Enter bin ranges (comma-separated):", 
+        value="0,1000,2500,4000,5500,7000,9000"
+    )
 
     labels = [label.strip() for label in labels_input.split(',')]
     value_ranges = [float(val.strip()) for val in value_ranges_input.split(',')]
