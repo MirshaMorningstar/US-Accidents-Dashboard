@@ -44,7 +44,7 @@ if fl is not None:
     df = pd.read_csv(fl, encoding="ISO-8859-1")
     st.success("✅ File Uploaded Successfully!")
 else:
-    df = pd.read_csv("US_Accidents.csv", encoding="ISO-8859-1")
+    df = pd.read_csv("US_Accidents_1000.csv", encoding="ISO-8859-1")
     st.info("ℹ️ Using sample dataset: `US_Accidents_1000.csv`")
 
 add_vertical_space(3)
@@ -172,13 +172,13 @@ if bin_col_name in df.columns:
     labels = [label.strip() for label in labels_input.split(',')]
     value_ranges = [float(val.strip()) for val in value_ranges_input.split(',')]
 
-    if "binning" not in st.session:
-        st.session["binnning"] = False
+    if "binning" not in st.session_state:
+        st.session_state["binnning"] = False
         
     if st.button("✅ Perform Binning"):
-        st.session["binning"] = True
+        st.session_state["binning"] = True
         
-    if st.session["binning"]:
+    if st.session_state["binning"]:
         data = perform_binning(df, bin_col_name, labels, value_ranges)
         st.write("📋 Sample Binned Data")
         st.dataframe(data[[bin_col_name, f"{bin_col_name}_Bin"]].head())
