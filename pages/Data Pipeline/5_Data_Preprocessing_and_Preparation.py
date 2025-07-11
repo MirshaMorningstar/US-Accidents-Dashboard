@@ -69,23 +69,39 @@ with c1:
     minmax_scaled = scaler.fit_transform(data[[attribute]])
 
     add_vertical_space(1)
-    st.markdown("**Histogram Comparison:**")
+    st.markdown("**📊 Histogram Comparison:**")
     fig1 = px.histogram(data[attribute], title='Original Data', color_discrete_sequence=px.colors.sequential.Agsunset)
     fig2 = px.histogram(minmax_scaled.flatten(), title='Min-Max Normalized', color_discrete_sequence=px.colors.sequential.Agsunset)
-    st.plotly_chart(fig1, use_container_width=True,key=1)
-    st.plotly_chart(fig2, use_container_width=True,key=2)
+    st.plotly_chart(fig1, use_container_width=True, key=1)
+    st.plotly_chart(fig2, use_container_width=True, key=2)
 
     add_vertical_space(1)
-    st.markdown("**Shapiro-Wilk Test (Normalized Data):**")
+    st.markdown("**🧪 Shapiro-Wilk Test (Normalized Data):**")
     w_stat, p_val = stats.shapiro(minmax_scaled.flatten())
     st.write(f"W Statistic: `{w_stat:.4f}`, P-value: `{p_val:.4f}`")
 
     add_vertical_space(1)
-    st.markdown("**Model Performance (Random Forest):**")
+    st.markdown("### 📈 Model Performance Comparison")
+
+    st.markdown("#### 🔹 K-Nearest Neighbors (Distance-Based Model)")
+    knn = KNeighborsClassifier()
+    score_orig_knn = cross_val_score(knn, data[[attribute]], data['Severity'], cv=2).mean()
+    score_scaled_knn = cross_val_score(knn, minmax_scaled, data['Severity'], cv=2).mean()
+    st.write(f"Original: `{score_orig_knn:.4f}` | Normalized: `{score_scaled_knn:.4f}`")
+
+    st.markdown("##### _Observation_:")
+    st.info("Normalization improves the KNN model accuracy because it relies on distance-based calculations, and unscaled features can distort the distance metrics.")
+
+    add_vertical_space(1)
+
+    st.markdown("#### 🔸 Random Forest (Ensemble Tree-Based Model)")
     rf = RandomForestClassifier()
-    score_orig = cross_val_score(rf, data[[attribute]], data['Severity'], cv=2).mean()
-    score_scaled = cross_val_score(rf, minmax_scaled, data['Severity'], cv=2).mean()
-    st.write(f"Original: `{score_orig:.4f}` | Normalized: `{score_scaled:.4f}`")
+    score_orig_rf = cross_val_score(rf, data[[attribute]], data['Severity'], cv=2).mean()
+    score_scaled_rf = cross_val_score(rf, minmax_scaled, data['Severity'], cv=2).mean()
+    st.write(f"Original: `{score_orig_rf:.4f}` | Normalized: `{score_scaled_rf:.4f}`")
+
+    st.markdown("##### _Observation_:")
+    st.info("Random Forest is scale-invariant. Hence, normalization has negligible impact on its performance.")
 
 with c2:
     st.markdown('### 🔸 Standard Normalization')
@@ -94,25 +110,42 @@ with c2:
     std_scaled = std_scaler.fit_transform(data[[attribute2]])
 
     add_vertical_space(1)
-    st.markdown("**Histogram Comparison:**")
+    st.markdown("**📊 Histogram Comparison:**")
     fig3 = px.histogram(data[attribute2], title='Original Data', color_discrete_sequence=px.colors.sequential.Agsunset)
     fig4 = px.histogram(std_scaled.flatten(), title='Standardized Data', color_discrete_sequence=px.colors.sequential.Agsunset)
-    st.plotly_chart(fig3, use_container_width=True,key=3)
-    st.plotly_chart(fig4, use_container_width=True,key=4)
+    st.plotly_chart(fig3, use_container_width=True, key=3)
+    st.plotly_chart(fig4, use_container_width=True, key=4)
 
     add_vertical_space(1)
-    st.markdown("**Shapiro-Wilk Test (Standardized Data):**")
+    st.markdown("**🧪 Shapiro-Wilk Test (Standardized Data):**")
     w_stat2, p_val2 = stats.shapiro(std_scaled.flatten())
     st.write(f"W Statistic: `{w_stat2:.4f}`, P-value: `{p_val2:.4f}`")
 
     add_vertical_space(1)
-    st.markdown("**Model Performance (Random Forest):**")
+    st.markdown("### 📈 Model Performance Comparison")
+
+    st.markdown("#### 🔹 K-Nearest Neighbors (Distance-Based Model)")
+    knn2 = KNeighborsClassifier()
+    score_orig_knn2 = cross_val_score(knn2, data[[attribute2]], data['Severity'], cv=2).mean()
+    score_scaled_knn2 = cross_val_score(knn2, std_scaled, data['Severity'], cv=2).mean()
+    st.write(f"Original: `{score_orig_knn2:.4f}` | Normalized: `{score_scaled_knn2:.4f}`")
+
+    st.markdown("##### _Observation_:")
+    st.info("Standardization significantly helps KNN by transforming features to comparable scales, avoiding bias from higher magnitude features.")
+
+    add_vertical_space(1)
+
+    st.markdown("#### 🔸 Random Forest (Ensemble Tree-Based Model)")
     rf2 = RandomForestClassifier()
-    score_orig2 = cross_val_score(rf2, data[[attribute2]], data['Severity'], cv=2).mean()
-    score_scaled2 = cross_val_score(rf2, std_scaled, data['Severity'], cv=2).mean()
-    st.write(f"Original: `{score_orig2:.4f}` | Normalized: `{score_scaled2:.4f}`")
+    score_orig_rf2 = cross_val_score(rf2, data[[attribute2]], data['Severity'], cv=2).mean()
+    score_scaled_rf2 = cross_val_score(rf2, std_scaled, data['Severity'], cv=2).mean()
+    st.write(f"Original: `{score_orig_rf2:.4f}` | Normalized: `{score_scaled_rf2:.4f}`")
+
+    st.markdown("##### _Observation_:")
+    st.info("Random Forest remains unaffected by normalization, proving its robustness against scale variance.")
 
 add_vertical_space(4)
+
 
 # ------------------- QQ Plot and Normality Check -----------------------
 st.markdown("## 📊 Normality Verification via Statistics")
