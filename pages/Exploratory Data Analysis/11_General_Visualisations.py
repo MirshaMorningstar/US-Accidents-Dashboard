@@ -111,8 +111,8 @@ with c1:
 with c2:
     # Scatter plot using Plotly Express
     st.markdown('##### Wind Speed vs. Visibility')
-    fig = px.scatter(df, x='Wind_Speed(mph)', y='Visibility(mi)', color='Visibility(mi)', 
-                    title='Wind Speed vs. Visibility', labels={'Wind_Speed(mph)': 'Wind Speed (mph)', 'Visibility(mi)': 'Visibility (miles)'})
+    fig = px.scatter(df, x='Wind_Chill(F)', y='Visibility(mi)', color='Visibility(mi)', 
+                    title='Wind Chill vs. Visibility', labels={'Wind_Chill(F)': 'Wind Chill (F)', 'Visibility(mi)': 'Visibility (miles)'})
     fig.update_traces(marker=dict(size=10, opacity=0.5), selector=dict(mode='markers'))
     fig.update_layout(title_font_size=16, title_font_color='brown', showlegend=False)
     # Update layout to display labels around the pie chart
@@ -225,14 +225,22 @@ c1,c2 = st.columns(2)
 
 add_vertical_space(5)
 with c1:
-    st.markdown('##### Box Plot of Accident Duration (Log Scaled)')
+    # 2. Accident Duration Analysis with Log Transformation
+    st.markdown('##### Box Plot of Log-Transformed Accident Duration')
+    
+    # Calculate duration in hours
     df['Duration'] = (pd.to_datetime(df['End_Time']) - pd.to_datetime(df['Start_Time'])).dt.total_seconds() / 3600
+    
+    # Apply log1p transformation to handle zero safely
+    df['Log_Duration'] = np.log1p(df['Duration'])
 
+    # Plotting
     fig2, ax2 = plt.subplots()
-    sns.boxplot(x=np.log1p(df['Duration']), ax=ax2)  # log1p handles zero values safely
-    ax2.set_title('Box Plot of Log Accident Duration')
+    sns.boxplot(x='Log_Duration', data=df, ax=ax2)
+    ax2.set_title('Box Plot of Log-Transformed Accident Duration')
     ax2.set_xlabel('Log(Duration in Hours)')
-    st.pyplot(fig, use_container_width=True)
+    st.pyplot(fig2, use_container_width=True)
+
 
 with c2:
     # 3. Scatter Plot of Pressure vs. Humidity
