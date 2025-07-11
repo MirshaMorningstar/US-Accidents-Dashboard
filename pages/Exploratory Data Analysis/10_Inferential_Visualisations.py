@@ -69,12 +69,6 @@ else:
 
 add_vertical_space(3)
 
-add_vertical_space(3)
-
-st.markdown("## Some Inferential Visualisations")
-add_vertical_space(3)
-
-
 c2,c3 = st.columns([5,4.75],gap='medium')
 with c2:
     st.header("Identification of the 10 accident-prone streets in USA.")
