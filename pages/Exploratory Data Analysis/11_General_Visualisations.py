@@ -147,7 +147,7 @@ with c2:
     monthly_accidents = df.resample('M').size()
     fig = px.line(x=monthly_accidents.index, y=monthly_accidents.values,
                   title='Accidents Over Time', labels={'x': 'Date', 'y': 'Number of Accidents'})
-    fig.update_traces(line=dict(color='yellow', dash='dot', width=2))
+    fig.update_traces(line=dict(color='hotpink', dash='dot', width=2))
     fig.update_layout(title_font_size=16, title_font_color='yellow',
                       xaxis_title_font_size=12, yaxis_title_font_size=12,
                       xaxis=dict(showgrid=True, gridwidth=1, gridcolor='lightgrey'),
