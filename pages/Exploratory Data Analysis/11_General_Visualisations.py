@@ -148,7 +148,7 @@ with c2:
     fig = px.line(x=monthly_accidents.index, y=monthly_accidents.values,
                   title='Accidents Over Time', labels={'x': 'Date', 'y': 'Number of Accidents'})
     fig.update_traces(line=dict(color='hotpink', dash='dot', width=2))
-    fig.update_layout(title_font_size=16, title_font_color='yellow',
+    fig.update_layout(title_font_size=16, title_font_color='hotpink',
                       xaxis_title_font_size=12, yaxis_title_font_size=12,
                       xaxis=dict(showgrid=True, gridwidth=1, gridcolor='lightgrey'),
                       yaxis=dict(showgrid=True, gridwidth=1, gridcolor='lightgrey'))
@@ -228,17 +228,17 @@ with c1:
     st.markdown('##### Box Plot of Accident Duration (Log Scaled)')
     df['Duration'] = (pd.to_datetime(df['End_Time']) - pd.to_datetime(df['Start_Time'])).dt.total_seconds() / 3600
 
-    fig, ax = plt.subplots()
-    sns.boxplot(x=np.log1p(df['Duration']), ax=ax)  # log1p handles zero values safely
-    ax.set_title('Box Plot of Log Accident Duration')
-    ax.set_xlabel('Log(Duration in Hours)')
+    fig2, ax2 = plt.subplots()
+    sns.boxplot(x=np.log1p(df['Duration']), ax=ax2)  # log1p handles zero values safely
+    ax2.set_title('Box Plot of Log Accident Duration')
+    ax2.set_xlabel('Log(Duration in Hours)')
     st.pyplot(fig, use_container_width=True)
 
 with c2:
     # 3. Scatter Plot of Pressure vs. Humidity
     st.markdown('##### Pressure vs. Humidity')
-    fig1 = px.scatter(df, x='Pressure(in)', y='Humidity(%)')
-    fig1.update_layout(xaxis_title='Atmospheric Pressure (in)', yaxis_title='Humidity (%)')
+    fig = px.scatter(df, x='Pressure(in)', y='Humidity(%)')
+    fig.update_layout(xaxis_title='Atmospheric Pressure (in)', yaxis_title='Humidity (%)')
     fig.update_traces(marker=dict(color='rgba(0,0,0,0)'))  # Make the scatter markers transparent
     fig.update_layout(barmode='overlay')
 
@@ -247,7 +247,7 @@ with c2:
 
     # Marginal Y bar plot
     fig.add_trace(px.bar(df, y='Humidity(%)').data[0])
-    st.plotly_chart(fig1,use_container_width=True)
+    st.plotly_chart(fig,use_container_width=True)
 
 
 add_vertical_space(5)
