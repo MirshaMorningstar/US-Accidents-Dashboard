@@ -257,7 +257,7 @@ with irr1:
 
     
   
-    fig, ax = plot_pca_correlation_graph(X, float_columns,
+    fig, ax = plot_pca_correlation_graph(X_scaled, float_columns,
                                         dimensions=(1, 2))
 
     # Display the plot using Streamlit
