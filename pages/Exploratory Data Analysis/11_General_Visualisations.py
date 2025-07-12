@@ -285,40 +285,19 @@ with c2:
 
 add_vertical_space(5)
 
-c1,c2 = st.columns([0.4,0.6])
-with c1:
-    st.markdown("##### Rose Plot for Accidents and Wind Direction")
-    add_vertical_space(2)
-    # Generate sample data for demonstration (replace with your actual data)
-    wind_directions = np.random.randint(0, 360, size=len(df))  # Wind directions in degrees
-    accident_severity = df['Severity']  # Accident severity levels
+st.markdown("##### Kernel Density Accidents in Folium Map")
+add_vertical_space(2)
+from streamlit_folium import folium_static
+import folium
+# Create a map centered around an average location
+map_center = [df['Start_Lat'].mean(), df['Start_Lng'].mean()]
+map = folium.Map(location=map_center, zoom_start=5)
 
-    # Create a rose plot
-    num_bins = 36  # Number of bins (36 for each 10 degrees)
-    theta = np.linspace(0.0, 2 * np.pi, num_bins, endpoint=False)
-    radii, _ = np.histogram(wind_directions, bins=num_bins)
-    colors = plt.cm.viridis(accident_severity / max(accident_severity))  # Color mapping based on severity
+# Add a heatmap layer
+heatmap = HeatMap(list(zip(df['Start_Lat'], df['Start_Lng'])), min_opacity=0.2, radius=15, blur=15)
+map.add_child(heatmap)
 
-    fig, ax = plt.subplots(subplot_kw={'projection': 'polar'}, figsize=(8, 8))
-    bars = ax.bar(theta, radii, width=2 * np.pi / num_bins, color=colors, edgecolor='black')
-
-    plt.title('Wind Direction vs. Accident Severity')
-    st.pyplot(fig,use_container_width=True)
-
-with c2 :
-    st.markdown("##### Kernel Density Accidents in Folium Map")
-    add_vertical_space(2)
-    from streamlit_folium import folium_static
-    import folium
-    # Create a map centered around an average location
-    map_center = [df['Start_Lat'].mean(), df['Start_Lng'].mean()]
-    map = folium.Map(location=map_center, zoom_start=5)
-
-    # Add a heatmap layer
-    heatmap = HeatMap(list(zip(df['Start_Lat'], df['Start_Lng'])), min_opacity=0.2, radius=15, blur=15)
-    map.add_child(heatmap)
-
-    # Save the map as an HTML file
-    map.save('accident_heatmap.html')
-    print('Heatmap generated and saved as accident_heatmap.html.')
-    folium_static(map)
+# Save the map as an HTML file
+map.save('accident_heatmap.html')
+print('Heatmap generated and saved as accident_heatmap.html.')
+folium_static(map)
