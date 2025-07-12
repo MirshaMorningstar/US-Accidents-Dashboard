@@ -207,7 +207,7 @@ with miss1:
     st.plotly_chart(bar_chart_numerical, use_container_width=True)
 
 with miss2:
-    st.markdown("#### Select K BestPie Chart")
+    st.markdown("#### Select K Best Pie Chart")
     add_vertical_space(1)
     num = st.select_slider("Select the number of attributes to Pie Chart ", options=list(range(1, len(sorted_numerical_scores) + 1)),value=7)
     pie_chart_numerical = px.pie(values=sorted_numerical_scores.values[:num], names=sorted_numerical_scores.index[:num], 
