@@ -6,6 +6,8 @@ import plotly.graph_objects as go
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
+
 from streamlit_extras.add_vertical_space import add_vertical_space
 import os
 
@@ -96,7 +98,7 @@ def build_model(df):
         n_jobs=n_jobs
     )
 
-    grid = GridSearchCV(clf, param_grid, cv=3)
+    grid = GridSearchCV(clf, param_grid, cv=3, scoring='f1_macro')
     grid.fit(X_train, Y_train)
 
     Y_pred = grid.predict(X_test)
@@ -104,8 +106,11 @@ def build_model(df):
     c1,c2 = st.columns(2)
 
     with c1:
-        st.write('**R² Score:**', r2_score(Y_test, Y_pred))
-        st.write('**Mean Squared Error:**', mean_squared_error(Y_test, Y_pred))
+        st.write('**Accuracy:**', accuracy_score(Y_test, Y_pred))
+        st.write('**F1 Score (Macro Avg):**', f1_score(Y_test, Y_pred, average='macro'))
+        st.write('**Classification Report:**')
+        st.text(classification_report(Y_test, Y_pred))
+
         st.write('**Best Parameters:**', grid.best_params_)
         st.write('**All Parameters:**')
         st.write(grid.get_params())
@@ -113,16 +118,19 @@ def build_model(df):
         # Process grid search results
         results_df = pd.concat(
             [pd.DataFrame(grid.cv_results_["params"]),
-             pd.DataFrame(grid.cv_results_["mean_test_score"], columns=["R2"])],
+             pd.DataFrame(grid.cv_results_["mean_test_score"], columns=["F1_Score"])],
             axis=1
         )
         st.markdown(filedownload(results_df), unsafe_allow_html=True)
 
     with c2:
-
+        st.write('**Confusion Matrix:**')
+        st.dataframe(pd.DataFrame(confusion_matrix(Y_test, Y_pred)))
+        add_vertical_space(2)
+        
         grouped = results_df.groupby(['max_features', 'n_estimators']).mean().reset_index()
-        pivot = grouped.pivot(index='max_features', columns='n_estimators', values='R2')
-    
+        pivot = grouped.pivot(index='max_features', columns='n_estimators', values='F1_Score')
+
         x_vals = pivot.columns.values
         y_vals = pivot.index.values
         z_vals = pivot.values
@@ -133,7 +141,7 @@ def build_model(df):
             scene=dict(
                 xaxis_title='n_estimators',
                 yaxis_title='max_features',
-                zaxis_title='R2 Score'
+                zaxis_title='F1 Score'
             ),
             autosize=False,
             width=800,
