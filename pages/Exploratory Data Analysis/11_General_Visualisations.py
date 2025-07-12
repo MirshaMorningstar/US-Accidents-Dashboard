@@ -285,19 +285,22 @@ with c2:
 
 add_vertical_space(5)
 
-st.markdown("##### Kernel Density Accidents in Folium Map")
-add_vertical_space(2)
-from streamlit_folium import folium_static
-import folium
-# Create a map centered around an average location
-map_center = [df['Start_Lat'].mean(), df['Start_Lng'].mean()]
-map = folium.Map(location=map_center, zoom_start=5)
+c1,c2,c3 = st.columns([0.15,0.70,0.15])
 
-# Add a heatmap layer
-heatmap = HeatMap(list(zip(df['Start_Lat'], df['Start_Lng'])), min_opacity=0.2, radius=15, blur=15)
-map.add_child(heatmap)
-
-# Save the map as an HTML file
-map.save('accident_heatmap.html')
-print('Heatmap generated and saved as accident_heatmap.html.')
-folium_static(map)
+with c2:
+        st.markdown("##### Kernel Density Accidents in Folium Map")
+        add_vertical_space(2)
+        from streamlit_folium import folium_static
+        import folium
+        # Create a map centered around an average location
+        map_center = [df['Start_Lat'].mean(), df['Start_Lng'].mean()]
+        map = folium.Map(location=map_center, zoom_start=5)
+        
+        # Add a heatmap layer
+        heatmap = HeatMap(list(zip(df['Start_Lat'], df['Start_Lng'])), min_opacity=0.2, radius=15, blur=15)
+        map.add_child(heatmap)
+        
+        # Save the map as an HTML file
+        map.save('accident_heatmap.html')
+        print('Heatmap generated and saved as accident_heatmap.html.')
+        folium_static(map)
