@@ -25,7 +25,7 @@ st.set_page_config(
     menu_items={
         'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
         'Report a bug': "mailto:a.k.mirsha9@gmail.com",
-        'About': "### This is an extremely cool web application built as a part of my Data Science Mini Project on the 'US Accidents Dataset'"
+        'About': "### This is an extremely cool web application built as a part of my Data Science and Machine Learning Project on the 'US Accidents Dataset'"
     },
     page_icon="analysis.png",
     layout="wide"
