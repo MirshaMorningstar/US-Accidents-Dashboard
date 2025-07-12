@@ -272,7 +272,7 @@ with irr2:
     
     #pl=plt.bar(range(len(pca.explained_variance_ratio_)), pca.explained_variance_ratio_, color='skyblue')
     fig = px.bar(x=range(len(pca.explained_variance_ratio_[:num_bar])), y=pca.explained_variance_ratio_[:num_bar], labels={'x': 'Principal Components', 'y': 'Magnitude Contribution of variance'}, 
-                    title=f'Top {top_n} Principal Component Analysis Variance Ratio Distribution')
+                    title=f'Top {num_bar} Principal Component Analysis Variance Ratio Distribution')
     fig.update_layout(xaxis_tickangle=-45)
     st.plotly_chart(fig, use_container_width=True)
 
