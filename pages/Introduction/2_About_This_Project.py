@@ -1,6 +1,11 @@
 import streamlit as st
 
-st.set_page_config(page_title="About this Project", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="About this Project", layout="wide", 
+                   menu_items={
+        'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
+        'Report a bug': "mailto:a.k.mirsha9@gmail.com",
+        'About': "### This is an extremely cool web application built as a part of my Data Science and Machine Learning Project on the 'US Accidents Dataset'"
+    }, initial_sidebar_state="expanded")
 
 st.markdown("""
 # 📘 About This Project  
