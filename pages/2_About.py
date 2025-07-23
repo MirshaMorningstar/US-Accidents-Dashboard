@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="About this Project", layout="wide", 
+st.set_page_config(page_title="About this Project",
                    menu_items={
         'Get Help': 'https://drive.google.com/drive/folders/1gosDbNFWAlPriVNjC8_PnytQv7YimI1V?usp=drive_link',
         'Report a bug': "mailto:a.k.mirsha9@gmail.com",
