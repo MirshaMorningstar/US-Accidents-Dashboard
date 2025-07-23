@@ -14,7 +14,7 @@ with file_path.open("rb") as file:
     hashed_passwords = pickle.load(file)
 
 # Set collapsed sidebar
-st.set_page_config(page_title="Authentication to Streamlit Application", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Authentication to Streamlit Application", initial_sidebar_state="collapsed")
 
 # Landing welcome text
 placeholder1 = st.empty()
