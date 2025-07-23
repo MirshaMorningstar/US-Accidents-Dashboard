@@ -159,9 +159,6 @@ elif authentication_status:  # successfully logged in
                 "Machine Learning and Hyperparameter Optimisation": [ml, hyper],
             }
         )
-    else:
-        pg = st.navigation(
-            {"About this Project": [intro]}
-        )
+
     # Run the selected page
     pg.run()
