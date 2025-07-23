@@ -7,11 +7,11 @@ st.set_page_config(page_title="About this Project",
         'About': "### This is an extremely cool web application built as a part of my Data Science and Machine Learning Project on the 'US Accidents Dataset'"
     }, initial_sidebar_state="expanded")
 
+st.info("✅ This is a public page — login is only required for the full dashboard. Please use the **Authentication** page in the sidebar to log in.")
+
 st.markdown("""
 # 📘 About This Project  
 ## 🚗 US Accidents Analysis & Machine Learning Prediction Platform  
-
-st.info("✅ This is a public page — login is only required for the full dashboard. Please use the **Authentication** page in the sidebar to log in.")
 ---
 ### 👋 Introduction
 
