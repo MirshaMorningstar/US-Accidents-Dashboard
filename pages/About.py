@@ -10,6 +10,8 @@ st.set_page_config(page_title="About this Project", layout="wide",
 st.markdown("""
 # 📘 About This Project  
 ## 🚗 US Accidents Analysis & Machine Learning Prediction Platform  
+
+st.info("✅ This is a public page — login is only required for the full dashboard. Please use the **Authentication** page in the sidebar to log in.")
 ---
 ### 👋 Introduction
 
