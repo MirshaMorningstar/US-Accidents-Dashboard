@@ -79,12 +79,12 @@ elif authentication_status:  # successfully logged in
     placeholder1.empty()
     placeholder2.empty()
 
-    # # --- Showing sidebar menu after login ---
-    # intro = st.Page(
-    #     "pages/Introduction/2_About_This_Project.py",
-    #     title="About this Application",
-    #     icon=":material/info:"
-    # )
+    # --- Showing sidebar menu after login ---
+    intro = st.Page(
+        "pages/Introduction/2_About_This_Project.py",
+        title="About this Application",
+        icon=":material/info:"
+    )
 
     # UI Personalization
     changetheme = st.Page(
@@ -152,7 +152,7 @@ elif authentication_status:  # successfully logged in
     if st.session_state.logged_in:
         pg = st.navigation(
             {
-                # "About this Project": [intro],
+                "About this Project": [intro],
                 "UI Personalisation and Color Theory": [changetheme, colorpalette],
                 "Data ETL Pipeline": [dataprep, dataqual, featureeng],
                 "Data EDA Pipeline": [specexp, genexp, inf, genvis],
