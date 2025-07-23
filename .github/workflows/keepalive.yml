@@ -1,21 +1,27 @@
-name: Empty Commit to Keep App Awake
+name: Empty Commit to Keep Streamlit App Awake
 
 on:
   schedule:
-    - cron: '0 */8 * * *'
+    - cron: '0 */10 * * *'  # Every 10 hours
   workflow_dispatch:
 
 jobs:
-  empty-commit:
+  keepalive:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create empty commit
+      - name: Configure Git
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git commit --allow-empty -m "Empty commit to keep Streamlit app awake"
+
+      - name: Make empty commit
+        run: |
+          git commit --allow-empty -m "Empty commit to keep Streamlit app awake" || echo "No changes to commit"
+
+      - name: Push commit with PAT
+        run: |
           git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} HEAD:main
