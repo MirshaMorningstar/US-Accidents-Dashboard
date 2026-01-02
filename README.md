@@ -1,6 +1,6 @@
 # The US Accidents Analysis and Case Study Dashboard
 
-### Live Link - [https://us-accidents-dashboard.streamlit.app](url)
+### Live Link - [Deployed on Streamlit, awake sleeping app](https://us-accidents-dashboard.streamlit.app)
 
 Welcome to the US Accidents Dashboard Project! This unique and comprehensive dashboard provides detailed insights into traffic accidents across the United States. Below is a detailed overview of the project, including its purpose, features, and requirements.
 
